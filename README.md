@@ -6,13 +6,6 @@
 
 [![MIT](https://img.shields.io/dub/l/vibe-d.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
-## 相关推荐
-[基于vue + vuex + less + ES6/7 + webpack + fetch + vue-router + store + element-ui实现的SPA后台管理系统模板](https://github.com/sosout/vue2-element)
-
-[Redux源码解析-Redux的架构](https://github.com/sosout/redux-source-analyse)
-
-[Immutable源码解析-Immutable的架构](https://github.com/sosout/immutable-source-analyse)
-
 
 ## 最新更新
 >  webpack版本升级2，同时引入Yarn缓存下载的每个包以及happypack利用了多进程，同时还利用缓存来使得rebuild 更快等
@@ -22,13 +15,10 @@
 > 路由模式更改为浏览器模式
 
 ## 前言
->  本工程主要基于react + redux + immutable + less + ES6/7 + webpack2.0 + fetch + react-router + antd(1.x)实现的SPA后台管理系统模板。
+>  本工程主要基于react + redux + immutable + less + ES6/7 + webpack2.0 + fetch + react-router + antd(1.x)实现的爱家公寓后台管理系统。
 
 >  如果觉得不错的话，请star一下吧 😊
 
->  编码时间：8:00——9:30, 下班时间——24:00，其他时间要工作。代码未优化，处女座代码必须要优化。由于代码延后，先向大家说声抱歉。您有什么问题可以私信我segmentfault。
-
-[线上demo](http://antd.sosout.com/)
 
 
 ### 下载
@@ -36,9 +26,9 @@
 ```
 # git clone
 
-git clone https://github.com/sosout/react-antd.git
+git clone https://github.com/fikyair/house-admin
 
-cd react-antd
+cd house-admin
 ```
 
 ### 安装
@@ -67,7 +57,7 @@ yarn run dist （发布生产版本，对代码进行混淆压缩，提取公共
 - [ ] 后台系统常用场景会逐个完善
 
 ### 历史更新
-  *2017.02.20*
+  *2018.02*
 
   	1. 初始化项目目录;
 

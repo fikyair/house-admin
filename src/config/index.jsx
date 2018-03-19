@@ -1,10 +1,10 @@
 const Main = {
 	target: process.env.NODE_ENV !== 'production' ? 'http://admin.sosout.com' : 'http://admin.sosout.com', //目标网站
-    name: 'Ant Design Admin',
-    prefix: 'antdAdmin',
-    footerText: 'Ant Design Admin 版权所有 © 2017 由 sosout 支持',
+    name: 'AI JIA Admin',
+    prefix: 'aiJiaAdmin',
+    footerText: 'AI JIA Admin 版权所有 © 2018 由 xsm 支持',
     logoSrc: 'https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg',
-    logoText: 'Antd Admin',
+    logoText: 'AiJia Admin',
     needLogin: true,
 	message: { // 提示信息
 		usernameInput: '请输入用户名',

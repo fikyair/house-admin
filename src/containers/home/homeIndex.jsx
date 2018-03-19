@@ -33,7 +33,7 @@ class Main extends Component {
         let linkHtml = '<link href="/antd/dist/app.css" rel="stylesheet" />';
         const steps = [{
           title: '下载',
-          content: '<p>$&nbsp;&nbsp;&nbsp;git clone</p><p>$&nbsp;&nbsp;&nbsp;git clone https://github.com/sosout/react-antd.git</p><p>$&nbsp;&nbsp;&nbsp;cd react-antd</p>',
+          content: '<p>$&nbsp;&nbsp;&nbsp;git clone</p><p>$&nbsp;&nbsp;&nbsp;git clone https://github.com/fikyair/house-admin.git</p><p>$&nbsp;&nbsp;&nbsp;cd house-admin</p>',
         }, {
           title: '安装',
           content: '<p>// 安装前请先确保已安装node和npm</p><p>// 安装成功后,再安装依赖，如果之前有用npm安装过，请先删掉node_modules</p><p>$&nbsp;&nbsp;&nbsp;yarn install</p>',
@@ -47,8 +47,8 @@ class Main extends Component {
             <Bcrumb title="系统信息" />
             <Row>
             	<Col span={24}>
-                    <Card title="项目前言" extra={<a href="https://github.com/fikyair">如果觉得不错的话，请star一下吧 😊</a>} bordered={false}>
-                      <p>本工程主要基于react + redux + immutable + less + ES6/7 + webpack + fetch + react-router + antd(1.x)实现的SPA后台管理系统模板。</p>
+                    <Card title="项目前言" extra={<a href="https://github.com/fikyair/house-admin.git">如果觉得不错的话，请star一下吧 😊</a>} bordered={false}>
+                      <p>本工程主要基于react + redux + immutable + less + ES6/7 + webpack + fetch + react-router + antd(1.x)实现的爱家公寓后台管理系统。</p>
                     </Card>
                     <Card title="项目上手" className="mg-top20">
                         <Steps current={current}>
@@ -79,7 +79,7 @@ class Main extends Component {
                         <p>在浏览器地址栏输入http://127.0.0.1:8888</p>
                     </Card> 
                     <Card title="项目说明" className="mg-top20">
-                        <p>此项目是本人空余时间搭建的。希望大家提供宝贵的意见和建议，谢谢。</p>
+                        <p>此项目是本人毕业设计。希望大家提供宝贵的意见和建议，谢谢。</p>
                     </Card> 
                 </Col>
             </Row>
