@@ -11,12 +11,9 @@ export const Axios = axios.create({
     // headers: {
     //     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
     // }
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'x-requested-with',
-    },
 });
 
+debugger
 //POST传参序列化(添加请求拦截器)
 Axios.interceptors.request.use(
     config => {
@@ -37,13 +34,14 @@ Axios.interceptors.request.use(
         return Promise.reject(error.data.message);
     }
 );
+debugger
 //返回状态判断(添加响应拦截器)
 Axios.interceptors.response.use(
     res => {
         console.log("请求获取到的数据：");
         console.log(res);
         //对响应数据做些事
-        if (res.state !== "200") {
+        if (res.status != "200") {
             console.log("请求失败了");
             return Promise.reject(res.data.message);
         } else {
@@ -107,34 +105,4 @@ export default {
             });
         },
     }
-}
-
-export const FetchAPI = (url, method, data) => {
-    //   store.dispatch({ type: 'REQUEST'});
-    return new Promise((resolve, reject) => {
-        const req = new Request(`/api${url}`, {
-            method: method,
-            body: JSON.stringify(data),
-            credentials: 'include',
-            headers: {
-                "Content-Type": ' application/json',
-                //"auth-token": $.cookie('token'),
-            }
-        });
-        try {
-            fetch(req).then((res) => {
-                //限额后台，在之前框架中加入http 400 状态码处理
-                /*if(res.ok || res.status == '400'){
-                    return res;
-                } else {
-                    return {err:{msg:'请求异常',code:'6666'}}
-                }*/
-                console.log("ss", res);
-
-            })
-        } catch (e) {
-            console.log('系统错误：');
-        }
-
-    })
 }
