@@ -13,8 +13,8 @@ class Main extends Component {
 
     componentWillMount (){
         const pName = '北京市'
-        Axios.get('/queryProvince/queryByPname/北京市').then((result) => {
-           console.log("Axiosreslut:", result);
+        Axios.get('/queryProvince/queryByPname/北京市').then(function(response) {
+           console.log("Axiosreslut:",response);
        })
 
     }

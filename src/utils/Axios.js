@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const Axios = axios.create({
     baseURL: "http://localhost:8081/", // 因为我本地做了反向代理 需要设置为 / 根目录才能实现
     timeout: 10000,
@@ -10,6 +11,10 @@ export const Axios = axios.create({
     // headers: {
     //     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
     // }
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'x-requested-with',
+    },
 });
 
 //POST传参序列化(添加请求拦截器)
@@ -38,10 +43,10 @@ Axios.interceptors.response.use(
         console.log("请求获取到的数据：");
         console.log(res);
         //对响应数据做些事
-        if (res.state!=="200") {
+        if (res.state !== "200") {
             console.log("请求失败了");
             return Promise.reject(res.data.message);
-        }else{
+        } else {
             return res;
         }
     },
@@ -66,20 +71,46 @@ Axios.interceptors.response.use(
 );
 
 export default {
-    install: function(Vue) {
-        Object.defineProperty(Vue.prototype, '$http', { value: this.methods });
+    install: function (Vue) {
+        Object.defineProperty(Vue.prototype, '$http', {value: this.methods});
     },
-    methods:{
-        getAxiosObj(){return Axios;},
+    methods: {
+        getAxiosObj() {
+            return Axios;
+        },
         ///        restful api              //
-        post(url,param){return new Promise((resolve, reject) => {Axios.post(url,param).then(function (response) { resolve(response)}).catch(function (error) { reject(error)});});},
-        get(url,param){return new Promise((resolve, reject) => {Axios.get(url,{params: param}).then(function (response) {resolve(response)}).catch(function (error) {reject(error)});});},
-        get(url){return new Promise((resolve, reject) => {Axios.get(url).then(function (response) {resolve(response)}).catch(function (error) {reject(error)});});},
+        post(url, param) {
+            return new Promise((resolve, reject) => {
+                Axios.post(url, param).then(function (response) {
+                    resolve(response)
+                }).catch(function (error) {
+                    reject(error)
+                });
+            });
+        },
+        get(url, param) {
+            return new Promise((resolve, reject) => {
+                Axios.get(url, {params: param}).then(function (response) {
+                    resolve(response)
+                }).catch(function (error) {
+                    reject(error)
+                });
+            });
+        },
+        get(url) {
+            return new Promise((resolve, reject) => {
+                Axios.get(url).then(function (response) {
+                    resolve(response)
+                }).catch(function (error) {
+                    reject(error)
+                });
+            });
+        },
     }
 }
 
-export const FetchAPI = (url,method,data)=>{
- //   store.dispatch({ type: 'REQUEST'});
+export const FetchAPI = (url, method, data) => {
+    //   store.dispatch({ type: 'REQUEST'});
     return new Promise((resolve, reject) => {
         const req = new Request(`/api${url}`, {
             method: method,
@@ -88,19 +119,20 @@ export const FetchAPI = (url,method,data)=>{
             headers: {
                 "Content-Type": ' application/json',
                 //"auth-token": $.cookie('token'),
-            }});
+            }
+        });
         try {
-            fetch(req).then((res)=>{
+            fetch(req).then((res) => {
                 //限额后台，在之前框架中加入http 400 状态码处理
                 /*if(res.ok || res.status == '400'){
                     return res;
                 } else {
                     return {err:{msg:'请求异常',code:'6666'}}
                 }*/
-                console.log("ss",res);
+                console.log("ss", res);
 
             })
-        } catch (e){
+        } catch (e) {
             console.log('系统错误：');
         }
 
