@@ -61,6 +61,20 @@ module.exports = {
             include: [APP_PATH]
         }]
     },
+    // devServer: {
+    //     proxy: {
+    //         '/api':{
+    //             target: 'http://localhost:8081',
+    //             pathRewrite: {"^/api" : ""},
+    //             secure:false,
+    //             changeOrigin: true
+    //         }
+    //     },
+    //     contentBase: [path.join(__dirname, 'public')],//t
+    //     historyApiFallback: true,
+    //     disableHostCheck: true,
+    //     https:true,
+    // },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
