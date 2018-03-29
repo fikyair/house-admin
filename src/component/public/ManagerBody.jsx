@@ -71,7 +71,7 @@ export default class ManagerBody extends React.Component {
             <div style={{margin: '20px 10px'}}>
                 <Card noHovering={true} className="limitable" bodyStyle={{padding: '0px'}}>
                     <Table
-                        bordered
+                        bordered = { false }
                         style = {{margin: '0 20px', }}
                         className="btl"
                         columns={columns}

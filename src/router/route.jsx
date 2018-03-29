@@ -100,15 +100,16 @@ const requireAuth = (nextState, replace) => {
 
 const RouteConfig = (
 	<Router history={browserHistory}>
-		<Route path="/home" component={layout} onEnter={requireAuth}>
-			<IndexRoute getComponent={home} onEnter={requireAuth} /> // 默认加载的组件，比如访问www.test.com,会自动跳转到www.test.com/home
-			<Route path="/home" getComponent={home} onEnter={requireAuth} />
-            <Route path="/user" getComponent={user} onEnter={requireAuth} />
-			<Route path="/platResource" getComponent={platResource} onEnter={requireAuth} />
-			<Route path="/region" getComponent={region} onEnter={requireAuth} />
-			<Route path="/message" getComponent={message} onEnter={requireAuth} />
-			<Route path="/ui/oneui" getComponent={oneui} onEnter={requireAuth} />
-			<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />
+		<Route path="/home" component={layout} >
+			<IndexRoute getComponent={home} /> // 默认加载的组件，比如访问www.test.com,会自动跳转到www.test.com/home
+			<Route path="/home" getComponent={home}  />
+            <Route path="/user" getComponent={user}/>
+			<Route path="/platResource" getComponent={platResource} />
+			<Route path="/region" getComponent={region} />
+			<Route path="/message" getComponent={message}  />
+			<Route path="/ui/oneui" getComponent={oneui}/>
+			<Route path="/ui/twoui" getComponent={twoui} />
+			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots
 			<IndexRoute component={login} /> // 默认加载的组件，比如访问www.test.com,会自动跳转到www.test.com/home

@@ -27,7 +27,6 @@ for (let i = 0; i < 10; i++) {
 /* 以类的方式创建一个组件 */
 class Main extends Component {
     constructor(props) {
-        console.log("dsd",data)
         super(props);
 
         this.columns = [{
@@ -66,11 +65,16 @@ class Main extends Component {
                             editable ?
                                 <span>
                   <a onClick={() => this.save(record.key)}>保存</a>
+                                     <span className="ant-divider"/>
                   <Popconfirm title="确定取消吗?" onConfirm={() => this.cancel(record.key)}>
                     <a>取消</a>
                   </Popconfirm>
                 </span>
-                                : <a onClick={() => this.edit(record.key)}>编辑</a>
+                                : <span>
+                                    <a onClick={() => this.edit(record.key)}>编辑</a>
+                                        <span className="ant-divider"/>
+                                    <a href='#'>删除</a>
+                                </span>
                         }
                     </div>
                 )
@@ -89,7 +93,26 @@ class Main extends Component {
         this.cacheData = data.map(item => ({ ...item }));
     }
 
+    renderColumns(text, record, column) {
+        return (
+            <EditableCell
+                editable={record.editable}
+                value={text}
+                onChange={value => this.handleChange(value, record.key, column)}
+            />
+        );
+    }
+    handleChange(value, key, column) {
+        const newData = [...this.state.data];
+        const target = newData.filter(item => key === item.key)[0];
+        if (target) {
+            target[column] = value;
+            this.setState({ data: newData });
+        }
+    }
+
     edit(key) {
+        debugger
         const newData = [...this.state.data];
         const target = newData.filter(item => key === item.key)[0];
         if (target) {
@@ -115,27 +138,9 @@ class Main extends Component {
             this.setState({ data: newData });
         }
     }
-    renderColumns(text, record, column) {
-        return (
-            <EditableCell
-                editable={record.editable}
-                value={text}
-                onChange={value => this.handleChange(value, record.key, column)}
-            />
-        );
-    }
-    handleChange(value, key, column) {
-        const newData = [...this.state.data];
-        const target = newData.filter(item => key === item.key)[0];
-        if (target) {
-            target[column] = value;
-            this.setState({ data: newData });
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
+    // }
 
     render() {
 
