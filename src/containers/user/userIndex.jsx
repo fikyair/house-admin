@@ -4,6 +4,7 @@ import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import ManagerBody from "../../component/public/ManagerBody";
 import { Table, Input, Popconfirm } from 'antd';
 import {Link} from 'react-router-dom';
+import { Axios } from "../../utils/Axios";
 
 const EditableCell = ({ editable, value, onChange }) => (
     <div>
@@ -13,46 +14,44 @@ const EditableCell = ({ editable, value, onChange }) => (
         }
     </div>
 );
-const data = []
-for (let i = 0; i < 10; i++) {
-    data.push({
-        key: i.toString(),
-        userName: '小鸣',
-        name: `小薛${i}`,
-        nickName: '明明是你',
-        phone: `1313225768${i}`,
-
-    });
-}
+const records = []
 /* 以类的方式创建一个组件 */
 class Main extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            loading: false,
+            userInfo: [],
+            pageNum: 1,
+            pageSize: 10,
+            total: 1,
+            records,
+        };
+        this.cacheData = records.map(item => ({ ...item }));
         this.columns = [{
             title: '用户名',
-            dataIndex: 'userName',
-            key: 'userName',
+            dataIndex: 'uName',
+            key: 'uName',
             width: '20%',
-            render: (text, record) => this.renderColumns(text, record, 'userName'),
+            render: (text, record) => this.renderColumns(text, record, 'uName'),
         }, {
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name',
+            title: '密码',
+            dataIndex: 'uPwd',
+            key: 'uPwd',
             width: '20%',
-            render: (text, record) => this.renderColumns(text, record, 'name'),
+            render: (text, record) => this.renderColumns(text, record, 'uPwd'),
         }, {
             title: '昵称',
-            dataIndex: 'nickName',
-            key: 'nickName',
+            dataIndex: 'uNickname',
+            key: 'uNickname',
             width: '20%',
-            render: (text, record) => this.renderColumns(text, record, 'nickName'),
+            render: (text, record) => this.renderColumns(text, record, 'uNickname'),
         }, {
             title: '电话',
-            dataIndex: 'phone',
-            key: 'phone',
+            dataIndex: 'uPhone',
+            key: 'uPhone',
             width: '20%',
-            render: (text, record) => this.renderColumns(text, record, 'phone'),
+            render: (text, record) => this.renderColumns(text, record, 'uPhone'),
         }, {
             title: '操作',
             key: 'action',
@@ -82,16 +81,20 @@ class Main extends Component {
             }
         }];
 
-        this.state = {
-            loading: false,
-            userInfo: [],
-            pageNum: 1,
-            pageSize: 10,
-            total: 1,
-            data,
-        };
-        this.cacheData = data.map(item => ({ ...item }));
+
     }
+    componentWillMount(){
+         Axios.get('/user/selectall').then((reslut) => {
+             console.log("Axiosreslut:",reslut.data);
+             const { data = [] } = reslut.data;
+
+             this.setState({
+                 records: data
+             })
+        })
+
+    }
+
 
     renderColumns(text, record, column) {
         return (
@@ -103,39 +106,49 @@ class Main extends Component {
         );
     }
     handleChange(value, key, column) {
-        const newData = [...this.state.data];
+        console.log("框里的值",value);
+        const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
         if (target) {
             target[column] = value;
-            this.setState({ data: newData });
+            this.setState({ records: newData });
         }
     }
 
     edit(key) {
         debugger
-        const newData = [...this.state.data];
+        const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
         if (target) {
             target.editable = true;
-            this.setState({ data: newData });
+            this.setState({ records: newData });
         }
     }
     save(key) {
-        const newData = [...this.state.data];
+        debugger
+        const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
+        console.log("修改后的数据为：",target);
+        const uId = target.uId;
         if (target) {
             delete target.editable;
-            this.setState({ data: newData });
+            this.setState({ records: newData });
             this.cacheData = newData.map(item => ({ ...item }));
         }
+
+/*        Axios.post(`/user/updateUserById/${uId}`,target).then((result) => {
+           console.log("成功",result);
+        })
+*/
     }
     cancel(key) {
-        const newData = [...this.state.data];
+        const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
+        //target 为本条数据
         if (target) {
             Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);
             delete target.editable;
-            this.setState({ data: newData });
+            this.setState({ records: newData });
         }
     }
     // shouldComponentUpdate(nextProps, nextState) {
@@ -154,7 +167,7 @@ class Main extends Component {
                     pageSize={this.state.pageSize }
                     total={ this.state.total }
                     columns={ this.columns }
-                    dataSource={ this.state.data }
+                    dataSource={ this.state.records }
                 />
             </div>
         );
