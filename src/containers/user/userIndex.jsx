@@ -19,15 +19,6 @@ const records = []
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loading: false,
-            userInfo: [],
-            pageNum: 1,
-            pageSize: 10,
-            total: 1,
-            records,
-        };
-        this.cacheData = records.map(item => ({ ...item }));
         this.columns = [{
             title: '用户名',
             dataIndex: 'uName',
@@ -57,39 +48,51 @@ class Main extends Component {
             key: 'action',
             width: '20%',
             render: (text, record) => {
+                debugger
                 const {editable} = record;
                 return (
                     <div className="editable-row-operations">
                         {
                             editable ?
                                 <span>
-                  <a onClick={() => this.save(record.key)}>保存</a>
-                                     <span className="ant-divider"/>
-                  <Popconfirm title="确定取消吗?" onConfirm={() => this.cancel(record.key)}>
-                    <a>取消</a>
-                  </Popconfirm>
-                </span>
-                                : <span>
+                                    <a onClick={() => this.save(record.key)}>保存</a>
+                                        <span className="ant-divider"/>
+                                    <Popconfirm title="确定取消吗?" onConfirm={() => this.cancel(record.key)}>
+                                        <a>取消</a>
+                                    </Popconfirm>
+                                </span>
+                                :
+                                <span>
                                     <a onClick={() => this.edit(record.key)}>编辑</a>
                                         <span className="ant-divider"/>
-                                    <a href='#'>删除</a>
+                                    <a onClick={() => this.delete(record.key)}>删除</a>
                                 </span>
                         }
                     </div>
-                )
+                );
 
-            }
+            },
         }];
-
-
+        this.state = {
+            loading: false,
+            userInfo: [],
+            pageNum: 1,
+            pageSize: 10,
+            total: 1,
+            records,
+        };
+        this.cacheData = records.map(item => ({ ...item }));
     }
     componentWillMount(){
          Axios.get('/user/selectall').then((reslut) => {
              console.log("Axiosreslut:",reslut.data);
-             const { data = [] } = reslut.data;
-
+             let { data = [] } = reslut.data;
+             const recordsData = data.map((item) => {
+                 const { uId : key , uId: uId , ...rest} = item;
+                 return { key, uId, ...rest }
+             })
              this.setState({
-                 records: data
+                 records: recordsData
              })
         })
 
