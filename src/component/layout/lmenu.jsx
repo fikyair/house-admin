@@ -58,19 +58,19 @@ export class Lmenu extends Component {
 	            </Menu.Item>
 	            <Menu.Item key="platResource">
 	            <Link to="/platResource">
-	                 <Icon type="setting" />
+	                 <Icon type="home" />
 	                   {!this.props.collapsed && <span className="nav-text">房源信息管理</span>}
 	                 </Link>
 	            </Menu.Item>
 	            <Menu.Item key="region">
 	            <Link to="/region">
-	              <Icon type="notification" />
+	              <Icon type="environment-o" />
 	              {!this.props.collapsed && <span className="nav-text">地域信息管理</span>}
 	            </Link>
 	            </Menu.Item>
 				<Menu.Item key="message">
 					<Link to="/message">
-						<Icon type="setting" />
+						<Icon type="message" />
                         {!this.props.collapsed && <span className="nav-text">留言信息管理</span>}
 					</Link>
 				</Menu.Item>

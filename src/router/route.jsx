@@ -54,6 +54,13 @@ const user = (location, cb) => {
     }, 'user');
 }
 
+// 用户增加页面
+const userAdd = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('../containers/user/userAdd').default)
+    }, 'userAdd');
+}
+
 // 系统设置
 const platResource = (location, cb) => {
     require.ensure([], require => {
@@ -109,6 +116,7 @@ const RouteConfig = (
 			<Route path="/message" getComponent={message}  />
 			<Route path="/ui/oneui" getComponent={oneui}/>
 			<Route path="/ui/twoui" getComponent={twoui} />
+			<Route path="/user/userAdd" getComponent={userAdd}/>
 			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots

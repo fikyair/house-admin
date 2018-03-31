@@ -58,7 +58,7 @@ class Main extends Component {
         return (
             <div>
                 <div>
-                    <Bcrumb title="留言信息管理" icon="setting"/>
+                    <Bcrumb title="留言信息管理" icon="message"/>
                     <ManagerBody
                         title={ <span style={{fontSize: 13, fontWeight: 400}}> 留言信息表 </span> }
                         pageNum={ this.state.pageNum }

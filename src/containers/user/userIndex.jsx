@@ -176,7 +176,7 @@ class Main extends Component {
         return (
             <div className="user-container">
                 <Bcrumb title="账号信息管理" icon="user"/>
-                <Button className="editable-add-btn" onClick={this.handleAdd}>新增</Button>
+                <Button className="editable-add-btn" style = {{ margin: '0 30px'}} onClick={this.handleAdd}><a href = '/user/userAdd'>新增</a></Button>
                 <ManagerBody
                     title={ <span style={{fontSize: 13, fontWeight: 400}}> 用户信息表 </span> }
                     pageNum={ this.state.pageNum }
