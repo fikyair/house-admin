@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import qs from 'qs';
 export const Axios = axios.create({
     baseURL: "http://localhost:8081/", // 因为我本地做了反向代理 需要设置为 / 根目录才能实现
     timeout: 10000,
@@ -8,9 +8,9 @@ export const Axios = axios.create({
     // headers: {
     //     "Content-Type": "application/json;charset=utf-8"
     // }
-    // headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-    // }
+    headers: {
+         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+     }
 });
 
 debugger
@@ -68,6 +68,7 @@ Axios.interceptors.response.use(
     }
 );
 
+/*
 export default {
     install: function (Vue) {
         Object.defineProperty(Vue.prototype, '$http', {value: this.methods});
@@ -106,3 +107,4 @@ export default {
         },
     }
 }
+*/

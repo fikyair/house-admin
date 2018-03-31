@@ -136,10 +136,10 @@ class Main extends Component {
             this.cacheData = newData.map(item => ({ ...item }));
         }
 
-/*        Axios.post(`/user/updateUserById/${uId}`,target).then((result) => {
+       Axios.post(`/user/updateUser`,target).then((result) => {
            console.log("成功",result);
         })
-*/
+
     }
     cancel(key) {
         const newData = [...this.state.records];
