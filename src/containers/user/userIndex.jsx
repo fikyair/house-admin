@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'; // 引入了React和PropTypes
 import {is, fromJS} from 'immutable';
 import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import ManagerBody from "../../component/public/ManagerBody";
-import { Table, Input, Popconfirm } from 'antd';
+import { Button, Input, Popconfirm } from 'antd';
 import {Link} from 'react-router-dom';
 import { Axios } from "../../utils/Axios";
 
@@ -132,7 +132,6 @@ class Main extends Component {
         const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
         console.log("修改后的数据为：",target);
-        const uId = target.uId;
         if (target) {
             delete target.editable;
             this.setState({ records: newData });
@@ -154,16 +153,30 @@ class Main extends Component {
             this.setState({ records: newData });
         }
     }
+    delete(key) {
+        debugger
+        const newData = [...this.state.records];
+        const target = newData.filter(item => key === item.key)[0];
+        Axios.post(`/user/deleteUser`,target).then((result) => {
+           // this.setState({ records: [] });
+            console.log("成功",result);
+        })
+    }
     // shouldComponentUpdate(nextProps, nextState) {
     //     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     // }
 
+    handleAdd = () => {
+        const { count, records } = this.state;
+
+    }
     render() {
 
         let userInfo = this.state.userInfo;  // 用户信息数据
         return (
             <div className="user-container">
                 <Bcrumb title="账号信息管理" icon="user"/>
+                <Button className="editable-add-btn" onClick={this.handleAdd}>新增</Button>
                 <ManagerBody
                     title={ <span style={{fontSize: 13, fontWeight: 400}}> 用户信息表 </span> }
                     pageNum={ this.state.pageNum }
