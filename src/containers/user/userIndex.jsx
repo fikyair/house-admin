@@ -65,7 +65,9 @@ class Main extends Component {
                                 <span>
                                     <a onClick={() => this.edit(record.key)}>编辑</a>
                                         <span className="ant-divider"/>
-                                    <a onClick={() => this.delete(record.key)}>删除</a>
+                                     <Popconfirm title="确定删除吗?" onConfirm={() => this.delete(record.key)}>
+                                        <a>删除</a>
+                                    </Popconfirm>
                                 </span>
                         }
                     </div>
