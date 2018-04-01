@@ -86,16 +86,23 @@ class Main extends Component {
         this.cacheData = records.map(item => ({ ...item }));
     }
     componentWillMount(){
-         Axios.get('/user/selectall').then((reslut) => {
-             console.log("Axiosreslut:",reslut.data);
-             let { data = [] } = reslut.data;
-             const recordsData = data.map((item) => {
-                 const { uId : key , uId: uId , ...rest} = item;
-                 return { key, uId, ...rest }
-             })
-             this.setState({
-                 records: recordsData
-             })
+            const { pageSize, pageNum } = this.state;
+            const params = { pageSize, pageNum }
+            this.searchData(params);
+
+    }
+    searchData = (params) => {
+        let { pageSize, pageNum } = params;
+        Axios.get(`/user/selectall?pageNum=${pageNum}&pageSize=${pageSize}`).then((reslut) => {
+            console.log("Axiosreslut:",reslut.data);
+            let { data = [] } = reslut.data;
+            const recordsData = data.map((item) => {
+                const { uId : key , uId: uId , ...rest} = item;
+                return { key, uId, ...rest }
+            })
+            this.setState({
+                records: recordsData
+            })
         })
 
     }
@@ -185,6 +192,8 @@ class Main extends Component {
                     pageSize={this.state.pageSize }
                     total={ this.state.total }
                     columns={ this.columns }
+                    changePage={(v)=>{ this.setState({pageNum: v})}}
+                    changeSize={(v)=>{ this.setState({pageSize: v})}}
                     dataSource={ this.state.records }
                 />
             </div>

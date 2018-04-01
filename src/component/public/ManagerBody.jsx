@@ -66,7 +66,7 @@ export default class ManagerBody extends React.Component {
 
 
     render() {
-        const {dataSource = [], columns, title, footer, pageNum, pageSize, total, changeSize, serachData} = this.props;
+        const {dataSource = [], columns, title, footer, pageNum, pageSize, total, changeSize, searchData} = this.props;
         return (
             <div style={{margin: '20px 10px'}}>
                 <Card noHovering={true} className="limitable" bodyStyle={{padding: '0px'}}>
@@ -88,7 +88,7 @@ export default class ManagerBody extends React.Component {
                                             pageNum:parseInt(current) == 0? 1:current,
                                             pageSize: size,
                                         }
-                                        serachData(params)
+                                        searchData(params)
                                     }}
                                     current={parseInt(pageNum)}
                                     pageSize={parseInt(pageSize)}
