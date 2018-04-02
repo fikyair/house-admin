@@ -96,12 +96,16 @@ class Main extends Component {
         Axios.get(`/user/selectall?pageNum=${pageNum}&pageSize=${pageSize}`).then((reslut) => {
             console.log("Axiosreslut:",reslut.data);
             let { data = [] } = reslut.data;
+            const { pageNum, pageSize, total } = reslut.data.page;
             const recordsData = data.map((item) => {
                 const { uId : key , uId: uId , ...rest} = item;
                 return { key, uId, ...rest }
             })
             this.setState({
-                records: recordsData
+                records: recordsData,
+                pageSize: pageSize,
+                pageNum: pageNum,
+                total: total,
             })
         })
 
@@ -189,12 +193,13 @@ class Main extends Component {
                 <ManagerBody
                     title={ <span style={{fontSize: 13, fontWeight: 400}}> 用户信息表 </span> }
                     pageNum={ this.state.pageNum }
-                    pageSize={this.state.pageSize }
+                    pageSize={ this.state.pageSize }
                     total={ this.state.total }
                     columns={ this.columns }
                     changePage={(v)=>{ this.setState({pageNum: v})}}
                     changeSize={(v)=>{ this.setState({pageSize: v})}}
                     dataSource={ this.state.records }
+                    searchData = { this.searchData }
                 />
             </div>
         );
