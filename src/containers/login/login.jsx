@@ -2,13 +2,12 @@ import React, { Component } from 'react'; // 引入了React
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { is, fromJS } from 'immutable';
+import { browserHistory } from 'react-router';
 import Config from '../../config/index';
-
 import { initialState, goLogin } from '../../redux/action/login/loginAction';
-
 import styles from './style/login.less';
-
 import { Spin, Form, Input, Button, message } from 'antd';
+import {Axios} from "../../utils/Axios";
 const FormItem = Form.Item;
 
 /* 以类的方式创建一个组件 */
@@ -41,7 +40,14 @@ class Login extends Component {
                         username: username,
                         password: password	
                     };
-		        actions.goLogin(loginParams);
+		        //actions.goLogin(loginParams);
+				Axios.post(`/user/login`,loginParams).then((result) => {
+					if (result.data) {
+                        browserHistory.push('/home');
+					} else {
+					  	message.error("用户名或密码错误！")
+					}
+				})
 		    }
 	    });
 	}
@@ -77,7 +83,7 @@ class Login extends Component {
 				    </div>
 					<Form onSubmit={this.handleSubmit}>
 				        <FormItem hasFeedback>
-                            {getFieldDecorator('username', { initialValue: 'sosout', rules: [{ required: true, message: Config.message.usernameInput }, { validator: this.checkUsername }] })(
+                            {getFieldDecorator('username', { initialValue: 'admin', rules: [{ required: true, message: Config.message.usernameInput }, { validator: this.checkUsername }] })(
                                 <Input size="large" placeholder="用户名" maxLength="6" />
                             )}
 				        </FormItem>
@@ -90,8 +96,8 @@ class Login extends Component {
 				            <Button type="primary" htmlType="submit" size="large" loading={loginInfo.length > 0 ? true : false}>{loginInfo.length > 0 ? '登录中...' : '登录'}</Button>
 				        </FormItem>
 				        <div className="login-account">
-                            <span>账号：sosout</span>
-                            <span>密码：sosout</span>
+                            <span>账号：admin</span>
+                            <span>密码：admin</span>
 				        </div>
 			        </Form>
 		        </Spin>

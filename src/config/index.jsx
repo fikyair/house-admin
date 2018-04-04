@@ -1,5 +1,5 @@
 const Main = {
-	target: process.env.NODE_ENV !== 'production' ? 'http://admin.sosout.com' : 'http://admin.sosout.com', //目标网站
+	target: process.env.NODE_ENV !== 'production' ? 'http://localhost:8081' : 'http://localhost:8081', //目标网站
     name: 'AI JIA Admin',
     prefix: 'aiJiaAdmin',
     footerText: 'AI JIA Admin 版权所有 © 2018 由 xsm 支持',
