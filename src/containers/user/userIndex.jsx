@@ -172,13 +172,9 @@ class Main extends Component {
 
         if (target) {
             Axios.post(`/user/deleteUser`,target).then((result) => {
-                const dataRec = this.state.records
-                for (let i = 0; i <= dataRec.length; i++ ){
-                    if(dataRec[i].key == target.key){
-                        dataRec.splice(i,1);
-                    }
-                }
-                this.setState({ records: dataRec });
+                const { pageSize, pageNum } = this.state;
+                const params = { pageSize, pageNum }
+                this.searchData(params);
             })
 
         }
