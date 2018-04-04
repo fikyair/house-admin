@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'; // 引入了React和PropTypes
-import {is, fromJS} from 'immutable';
 import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import ManagerBody from "../../component/public/ManagerBody";
 import { Button, Input, Popconfirm } from 'antd';
@@ -173,9 +172,6 @@ class Main extends Component {
 
         if (target) {
             Axios.post(`/user/deleteUser`,target).then((result) => {
-                //Object.assign(target,)
-                //this.setState({ records: this.state.records });
-                console.log("此时的state为",this.state.records);
                 const dataRec = this.state.records
                 for (let i = 0; i <= dataRec.length; i++ ){
                     if(dataRec[i].key == target.key){
@@ -183,15 +179,11 @@ class Main extends Component {
                     }
                 }
                 this.setState({ records: dataRec });
-                console.log("删除后的state为",this.state.records);
             })
 
         }
 
     }
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    // }
 
     handleAdd = () => {
         const { count, records } = this.state;
