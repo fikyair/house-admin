@@ -83,7 +83,6 @@ class Main extends Component {
             total: 1,
             records,
         };
-        this.cacheData = records.map(item => ({ ...item }));
     }
     componentWillMount(){
             const { pageSize, pageNum } = this.state;
@@ -107,6 +106,7 @@ class Main extends Component {
                 pageNum: pageNum,
                 total: total,
             })
+            this.cacheData = recordsData.map(item => ({ ...item }));
         })
 
     }
@@ -161,7 +161,7 @@ class Main extends Component {
         const target = newData.filter(item => key === item.key)[0];
         //target 为本条数据
         if (target) {
-            Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);
+            Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);//本条数据用cacheData来覆盖
             delete target.editable;
             this.setState({ records: newData });
         }
@@ -170,10 +170,24 @@ class Main extends Component {
         debugger
         const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
-        Axios.post(`/user/deleteUser`,target).then((result) => {
-           // this.setState({ records: [] });
-            console.log("成功",result);
-        })
+
+        if (target) {
+            Axios.post(`/user/deleteUser`,target).then((result) => {
+                //Object.assign(target,)
+                //this.setState({ records: this.state.records });
+                console.log("此时的state为",this.state.records);
+                const dataRec = this.state.records
+                for (let i = 0; i <= dataRec.length; i++ ){
+                    if(dataRec[i].key == target.key){
+                        dataRec.splice(i,1);
+                    }
+                }
+                this.setState({ records: dataRec });
+                console.log("删除后的state为",this.state.records);
+            })
+
+        }
+
     }
     // shouldComponentUpdate(nextProps, nextState) {
     //     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
