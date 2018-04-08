@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Bcrumb} from "../../component/bcrumb/bcrumb";
 import {Form, Button, Input, Row, Col, Card} from 'antd';
 import {Axios} from "../../utils/Axios";
+import './style/user.less';
 
 const FormItem = Form.Item;
 
@@ -35,8 +36,8 @@ class userAdd extends Component {
         return (
             <div className="user-container">
                 <Bcrumb title="添加账号" icon="usergroup-add"/>
-                <Form>
-                    <Card title={'添加账号信息'}>
+                <Form className="flat-form">
+                    <div className = "ant-card-head-title">添加账号信息</div>
                         <Row>
                             <Col span={12}>
                                 <FormItem
@@ -103,7 +104,6 @@ class userAdd extends Component {
                                 </FormItem>
                             </Col>
                         </Row>
-                    </Card>
                 </Form>
                 <Button type="primary" htmlType="submit" style={{marginLeft: '69%', marginTop: 20}}
                         onClick={() => {
