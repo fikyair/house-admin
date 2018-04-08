@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'; // 引入了React和PropTypes
 import {is, fromJS} from 'immutable';
 import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import ManagerBody from "../../component/public/ManagerBody";
+import { Button } from 'antd';
 
 /* 以类的方式创建一个组件 */
 class Main extends Component {
@@ -70,6 +71,11 @@ class Main extends Component {
         key: 'require',
         width: '10%',
     },{
+        title: '房屋图片',
+        dataIndex: 'pic',
+        key: 'pic',
+        width: '10%',
+    },{
             title: '操作',
             key: 'action',
             width: '10%',
@@ -91,6 +97,7 @@ class Main extends Component {
             <div>
                 <div>
                     <Bcrumb title="房源信息管理" icon="home"/>
+                    <Button className="editable-add-btn" style = {{ margin: '0 24px'}} onClick={this.handleAdd}><a href = '/platResource/platAdd'>新增</a></Button>
                     <ManagerBody
                         title={ <span style={{fontSize: 13, fontWeight: 400}}> 房源信息表 </span> }
                         pageNum={ this.state.pageNum }
