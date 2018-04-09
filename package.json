@@ -1,7 +1,7 @@
 {
   "name": "react-antd",
   "version": "1.0.0",
-  "description": "基于react + redux + immutable + less + ES6/7 + webpack + fetch + react-router + antd(1.x)实现的SPA后台管理系统模板",
+  "description": "爱家房屋",
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sosout/react-antd.git"
+    "url": "git+https://github.com/fikyair/house-admin.git"
   },
   "keywords": [
     "react",
@@ -21,16 +21,13 @@
     "webpack",
     "fetch",
     "react-router",
-    "antd(1.x)",
-    "SPA后台管理系统模板"
+    "antd(2.x)",
+    "Axios",
+    "爱家公寓"
   ],
-  "author": "sosout",
+  "author": "xsm",
   "license": "ISC",
   "private": true,
-  "bugs": {
-    "url": "https://github.com/sosout/react-antd/issues"
-  },
-  "homepage": "https://github.com/sosout/react-antd#readme",
   "dependencies": {
     "antd": "^2.13.9",
     "axios": "^0.18.0",

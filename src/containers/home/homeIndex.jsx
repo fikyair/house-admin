@@ -76,10 +76,10 @@ class Main extends Component {
                         </div>
                     </Card> 
                     <Card title="访问" className="mg-top20">
-                        <p>在浏览器地址栏输入http://127.0.0.1:8888</p>
+                        <p>在浏览器地址栏输入http://127.0.0.1:8082</p>
                     </Card> 
                     <Card title="项目说明" className="mg-top20">
-                        <p>此项目是本人毕业设计。希望大家提供宝贵的意见和建议，谢谢。</p>
+                        <p>毕业设计</p>
                     </Card> 
                 </Col>
             </Row>
