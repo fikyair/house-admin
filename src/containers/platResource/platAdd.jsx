@@ -4,7 +4,6 @@ import {Form, Button, Input, Row, Col, Select, Icon, Upload, Cascader} from 'ant
 import {Axios} from "../../utils/Axios";
 import './style/plat.less';
 import FormItemComs from "../../component/public/FormItemComs";
-
 const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
@@ -63,25 +62,25 @@ class platAdd extends Component {
 
         //省市区级联
         const options = [{
-            value: 'zhejiang',
-            label: 'Zhejiang',
+            value: '北京市',
+            label: '北京市',
             children: [{
-                value: 'hangzhou',
-                label: 'Hangzhou',
+                value: '石景山区',
+                label: '石景山区',
                 children: [{
-                    value: 'xihu',
-                    label: 'West Lake',
+                    value: '实兴大街',
+                    label: '实兴大街',
                 }],
             }],
         }, {
-            value: 'jiangsu',
-            label: 'Jiangsu',
+            value: '上海市',
+            label: '上海市',
             children: [{
-                value: 'nanjing',
-                label: 'Nanjing',
+                value: '黄浦区',
+                label: '黄浦区',
                 children: [{
-                    value: 'zhonghuamen',
-                    label: 'Zhong Hua Men',
+                    value: '外滩街道延安东路',
+                    label: '外滩街道延安东路',
                 }],
             }],
         }];
@@ -107,46 +106,7 @@ class platAdd extends Component {
                                     )}
                                 </FormItem>
                             </Col>
-                            <Col span={8}>
-                                <FormItem
-                                    label = "房屋类型"
-                                    {...formItemLayout}
-                                >
-                                    {getFieldDecorator( 'fType', {
-                                            initialValue: '',
-                                            rules: [{
-                                                required: true, message: '请填写房屋类型'
-                                            }]
-                                        }
-                                    )(
-                                        <Select placeholder = "请选择" style = {{ width: 140 }}>
-                                            <Option value = "entire"> 整租</Option>
-                                            <Option value = "share"> 合租</Option>
-                                        </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem
-                                    label = "居室"
-                                    {...formItemLayout}
-                                >
-                                    {getFieldDecorator( 'fHabitable', {
-                                            initialValue: '',
-                                            rules: [{
-                                                required: true, message: '请填写居室'
-                                            }]
-                                        }
-                                    )(
-                                        <Select placeholder = "请选择" style = {{ width: 140 }}>
-                                            <Option value = "one"> 一居室</Option>
-                                            <Option value = "two"> 二居室</Option>
-                                            <Option value = "three"> 三居室</Option>
-                                            <Option value = "another"> 四居室及以上</Option>
-                                        </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
+
                             <Col span={8}>
                                 <FormItem
                                     label = "价格(元)"
@@ -181,6 +141,22 @@ class platAdd extends Component {
                             </Col>
                             <Col span={8}>
                                 <FormItem
+                                    label = "楼层(楼)"
+                                    {...formItemLayout}
+                                >
+                                    {getFieldDecorator( 'fFloor', {
+                                            initialValue: '',
+                                            rules: [{
+                                                required: true, message: '请填写所在楼层'
+                                            }]
+                                        }
+                                    )(
+                                        <Input style={{width: 140}}/>
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem
                                     label = "面积(m²)"
                                     {...formItemLayout}
                                 >
@@ -201,7 +177,7 @@ class platAdd extends Component {
                                     {...formItemLayout}
                                 >
                                     {getFieldDecorator( 'fOrientation', {
-                                            initialValue: '',
+                                            initialValue: [],
                                             rules: [{
                                                 required: true, message: '请填写房屋朝向'
                                             }]
@@ -218,27 +194,55 @@ class platAdd extends Component {
                             </Col>
                             <Col span={8}>
                                 <FormItem
-                                    label = "楼层"
+                                    label = "房屋类型"
                                     {...formItemLayout}
                                 >
-                                    {getFieldDecorator( 'fFloor', {
-                                            initialValue: '',
+                                    {getFieldDecorator( 'fType', {
+                                            initialValue: [],
                                             rules: [{
-                                                required: true, message: '请填写所在楼层'
+                                                required: true, message: '请填写房屋类型'
                                             }]
                                         }
                                     )(
-                                        <Input style={{width: 140}}/>
+                                        <Select
+                                            style = {{ width: 140 }}
+                                            placeholder="请选择"
+                                        >
+                                            <Option value = "entire"> 整租</Option>
+                                            <Option value = "share"> 合租</Option>
+                                        </Select>
                                     )}
                                 </FormItem>
                             </Col>
+                            <Col span={8}>
+                                <FormItem
+                                    label = "居室"
+                                    {...formItemLayout}
+                                >
+                                    {getFieldDecorator( 'fHabitable', {
+                                            initialValue: [],
+                                            rules: [{
+                                                required: true, message: '请填写居室'
+                                            }]
+                                        }
+                                    )(
+                                        <Select placeholder = "请选择" style = {{ width: 140 }}>
+                                            <Option value = "one"> 一居室</Option>
+                                            <Option value = "two"> 二居室</Option>
+                                            <Option value = "three"> 三居室</Option>
+                                            <Option value = "another"> 四居室及以上</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+
                             <Col span={8}>
                                 <FormItem
                                     label = "是否有卫生间"
                                     {...formItemLayout}
                                 >
                                     {getFieldDecorator( 'ftoilet', {
-                                            initialValue: '',
+                                            initialValue: [],
                                             rules: [{
                                                 required: true, message: '请填写是否有独立卫生间'
                                             }]
@@ -257,7 +261,7 @@ class platAdd extends Component {
                                     {...formItemLayout}
                                 >
                                     {getFieldDecorator( 'fShower', {
-                                            initialValue: '',
+                                            initialValue: [],
                                             rules: [{
                                                 required: true, message: '请填写是否有独立淋浴'
                                             }]
@@ -276,7 +280,7 @@ class platAdd extends Component {
                                     {...formItemLayout}
                                 >
                                     {getFieldDecorator( 'fHeating', {
-                                            initialValue: '',
+                                            initialValue: [],
                                             rules: [{
                                                 required: true, message: '请填写是否有集中供暖'
                                             }]

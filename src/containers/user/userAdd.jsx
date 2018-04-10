@@ -36,7 +36,7 @@ class userAdd extends Component {
         return (
             <div className="user-container">
                 <Bcrumb title="添加账号" icon="usergroup-add"/>
-                <Form className="flat-form">
+                <Form className="user-form">
                     <div className = "ant-card-head-title">添加账号信息</div>
                         <Row>
                             <Col span={12}>
