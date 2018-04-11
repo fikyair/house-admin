@@ -23,7 +23,14 @@ class platAdd extends Component {
         this.props.form.validateFields((err, values) => {
             if(!err) {
                 const formData = this.props.form.getFieldsValue();
-                console.log("表单信息==>", formData);
+
+                let { fStreet = [] } = formData;
+
+                const fStreetTemp = fStreet.toString();
+
+                const formDataImg = { ...formData, fStreet : fStreetTemp, fPic: this.state.fPic};
+
+                console.log("表单信息==>", formDataImg);
             }
         })
     }
