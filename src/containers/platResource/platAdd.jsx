@@ -28,9 +28,13 @@ class platAdd extends Component {
 
                 const fStreetTemp = fStreet.toString();
 
-                const formDataImg = { ...formData, fStreet : fStreetTemp, fPic: this.state.fPic};
+                const formDataWithImg = { ...formData, fStreet : fStreetTemp, fPic: this.state.fPic};
 
-                console.log("表单信息==>", formDataImg);
+                console.log("表单信息==>", formDataWithImg);
+
+                Axios.post(`flat/addFlat`,formDataWithImg).then((result) =>{
+                    console.log("添加房屋返回信息：",result);
+                })
             }
         })
     }
@@ -267,7 +271,7 @@ class platAdd extends Component {
                                     label = "是否有卫生间"
                                     {...formItemLayout}
                                 >
-                                    {getFieldDecorator( 'ftoilet', {
+                                    {getFieldDecorator( 'fToilet', {
                                             initialValue: [],
                                             rules: [{
                                                 required: true, message: '请填写是否有独立卫生间'
