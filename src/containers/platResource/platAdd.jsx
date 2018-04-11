@@ -3,6 +3,7 @@ import {Bcrumb} from "../../component/bcrumb/bcrumb";
 import {Form, Button, Input, Row, Col, Select, Icon, Upload, Cascader} from 'antd';
 import {Axios} from "../../utils/Axios";
 import './style/plat.less';
+import COS from 'cos-js-sdk-v5';
 import FormItemComs from "../../component/public/FormItemComs";
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -12,6 +13,11 @@ const { TextArea } = Input;
 class platAdd extends Component {
 
 
+    state = {
+        fileList: [],
+        imgUrl: '',
+        fPic: '',
+    };
 
     handleSubmit() {
         this.props.form.validateFields((err, values) => {
@@ -26,6 +32,30 @@ class platAdd extends Component {
     onChangeCas = (value) => {
         console.log(value);
     }
+    componentDidMount () {
+    }
+    handleUploadChange = (e) =>{
+        let { file = {}, fileList = []}  = e ;
+       // console.log("aaaa",file.response.fileUrl);
+        this.setState({
+            fileList: fileList,
+            imgUrl: file.response?file.response.fileUrl:'',
+        })
+        let fPic = '';
+        this.state.fileList.map((item) => {
+            if(item.response != undefined){
+                fPic += item.response.fileUrl + ',';
+            }
+        })
+
+        //可以优化
+        if(fPic != ''){
+            fPic = fPic.substr(0,fPic.length - 1);
+        }
+        this.setState({
+            fPic: fPic,
+        })
+    }
 
     render() {
         const {getFieldDecorator} = this.props.form;
@@ -39,24 +69,12 @@ class platAdd extends Component {
                 sm: {span: 12},
             },
         };
-        const fileList = [{
-            uid: -1,
-            name: 'xxx.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }, {
-            uid: -2,
-            name: 'yyy.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }];
 
-        const props1 = {
-            action: '//jsonplaceholder.typicode.com/posts/',
+        const args = {
+            name: 'file',
+            action: 'http://localhost:8081/flat/imgUpload',
             listType: 'picture',
-            defaultFileList: [...fileList],
+            fileList: this.state.fileList,
             className: 'upload-list-inline',
         };
 
@@ -89,6 +107,7 @@ class platAdd extends Component {
                 <Bcrumb title="添加房源信息" icon="plus"/>
                 <Form className="flat-form">
                     <div className = "ant-card-head-title">添加房源信息</div>
+
                         <Row>
                             <Col span={8}>
                                 <FormItem
@@ -344,7 +363,9 @@ class platAdd extends Component {
                                 </FormItem>
                             </Col>
                         </Row>
-                    <Upload {...props1}>
+                    <Upload
+                        {...args}
+                        onChange={this.handleUploadChange}>
                         <Button>
                             <Icon type="upload" /> 上传图片
                         </Button>

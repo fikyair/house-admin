@@ -28,7 +28,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // 代理服务器
 app.use('/common', proxyMiddleware({
-    target: 'http://admin.sosout.com',
+    target: 'http://localhost:8081',
     changeOrigin: true
 }));
 

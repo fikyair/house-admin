@@ -124,7 +124,7 @@ const RouteConfig = (
 			<Route path="/ui/oneui" getComponent={oneui}/>
 			<Route path="/ui/twoui" getComponent={twoui} />
 			<Route path="/user/userAdd" getComponent={userAdd}/>
-			<Route path="/platResource/platAdd" getComponent={platAdd}/>
+			<Route path="/platResource/platAdd" getComponent={platAdd} />
 			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots
