@@ -13,7 +13,7 @@ class Main extends Component {
 	render() {
 		return (	
 		<div>
-			组件二
+			订单管理
 		</div>
 		);
 	}
