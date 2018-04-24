@@ -55,7 +55,7 @@ class platAdd extends Component {
         let fPic = '';
         this.state.fileList.map((item) => {
             if(item.response != undefined){
-                fPic += item.response.fileUrl + ',';
+                fPic += item.response.fileUrl + ' ';
             }
         })
 
@@ -214,10 +214,10 @@ class platAdd extends Component {
                                         }
                                     )(
                                         <Select placeholder = "请选择" style = {{ width: 140 }}>
-                                            <Option value = "east"> 东</Option>
-                                            <Option value = "south"> 南</Option>
-                                            <Option value = "west"> 西</Option>
-                                            <Option value = "north"> 北</Option>
+                                            <Option value = "朝东"> 东</Option>
+                                            <Option value = "朝南"> 南</Option>
+                                            <Option value = "朝西"> 西</Option>
+                                            <Option value = "朝北"> 北</Option>
                                         </Select>
                                     )}
                                 </FormItem>
