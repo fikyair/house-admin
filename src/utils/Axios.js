@@ -13,7 +13,6 @@ export const Axios = axios.create({
      }
 });
 
-debugger
 //POST传参序列化(添加请求拦截器)
 Axios.interceptors.request.use(
     config => {
@@ -34,7 +33,6 @@ Axios.interceptors.request.use(
         return Promise.reject(error.data.message);
     }
 );
-debugger
 //返回状态判断(添加响应拦截器)
 Axios.interceptors.response.use(
     res => {

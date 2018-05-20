@@ -47,7 +47,6 @@ class Main extends Component {
             key: 'action',
             width: '20%',
             render: (text, record) => {
-                debugger
                 const {editable} = record;
                 return (
                     <div className="editable-row-operations">
@@ -131,7 +130,6 @@ class Main extends Component {
     }
 
     edit(key) {
-        debugger
         const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
         if (target) {
@@ -140,7 +138,6 @@ class Main extends Component {
         }
     }
     save(key) {
-        debugger
         const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
         console.log("修改后的数据为：",target);
@@ -166,7 +163,6 @@ class Main extends Component {
         }
     }
     delete(key) {
-        debugger
         const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
 

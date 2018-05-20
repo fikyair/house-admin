@@ -54,7 +54,6 @@ export default class ManagerBody extends React.Component {
     }]
 
     changePage = (page) => {
-        debugger;
         const {pageSize, changePage, searchData} = this.props;
         this.props.changePage(page);//子组件改变page时候通父组件
         const params = {

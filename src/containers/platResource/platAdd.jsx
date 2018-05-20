@@ -17,6 +17,11 @@ class platAdd extends Component {
         fileList: [],
         imgUrl: '',
         fPic: '',
+        k: 'sds',
+        addrInfo:[],
+        pName:'',
+        cName:'',
+        sName:'',
     };
 
     handleSubmit() {
@@ -28,7 +33,9 @@ class platAdd extends Component {
 
                 const fStreetTemp = fStreet.toString();
 
-                const formDataWithImg = { ...formData, fStreet : fStreetTemp, fPic: this.state.fPic};
+                const formDataWithImg = { ...formData, fStreet : fStreetTemp, fPic: this.state.fPic,
+                    pName: this.state.pName, cName: this.state.cName, sName: this.state.sName
+                };
 
                 console.log("表单信息==>", formDataWithImg);
 
@@ -41,9 +48,22 @@ class platAdd extends Component {
 
     //省市区级联
     onChangeCas = (value) => {
-        console.log(value);
+       console.log("看这里",value);
+        this.setState({
+            pName: value[0],
+            cName: value[1],
+            sName: value[2],
+        })
     }
     componentDidMount () {
+        //查询出所有的省市县街道
+        Axios.get(`/queryProvince/query/`).then((result)=>{
+            console.log("地址数据：",result.data);
+            const { data =[]} = result.data;
+            this.setState({
+                addrInfo: data,
+            })
+        })
     }
     handleUploadChange = (e) =>{
         let { file = {}, fileList = []}  = e ;
@@ -70,6 +90,7 @@ class platAdd extends Component {
 
     render() {
         const {getFieldDecorator} = this.props.form;
+        const addrInfo = this.state.addrInfo;
         const formItemLayout = {
             labelCol: {
                 xs: {span: 12},
@@ -88,11 +109,36 @@ class platAdd extends Component {
             fileList: this.state.fileList,
             className: 'upload-list-inline',
         };
-
         //省市区级联
+        let option = [];
+        option = addrInfo.map(item =>{
+           // console.log(item);
+            return {
+                id: item.pId,
+                value: item.pName,
+                label: item.pName,
+                children: item.cities.map(i=>{
+                    return {
+                        id: i.cId,
+                        value: i.cName,
+                        label: i.cName,
+                        children: i.streets.map(j=>{
+                            return {
+                                id: j.sId,
+                                value: j.sName,
+                                label: j.sName,
+                            }
+                        })
+                    }
+                })
+
+            }
+        })
+        //ll
+        console.log("地址信息===》",option);
         const options = [{
-            value: '北京市',
-            label: '北京市',
+            value: this.state.k,
+            label: this.state.k,
             children: [{
                 value: '石景山区',
                 label: '石景山区',
@@ -238,8 +284,8 @@ class platAdd extends Component {
                                             style = {{ width: 140 }}
                                             placeholder="请选择"
                                         >
-                                            <Option value = "entire"> 整租</Option>
-                                            <Option value = "share"> 合租</Option>
+                                            <Option value = "整租"> 整租</Option>
+                                            <Option value = "合租"> 合租</Option>
                                         </Select>
                                     )}
                                 </FormItem>
@@ -257,10 +303,10 @@ class platAdd extends Component {
                                         }
                                     )(
                                         <Select placeholder = "请选择" style = {{ width: 140 }}>
-                                            <Option value = "one"> 一居室</Option>
-                                            <Option value = "two"> 二居室</Option>
-                                            <Option value = "three"> 三居室</Option>
-                                            <Option value = "another"> 四居室及以上</Option>
+                                            <Option value = "一居室"> 一居室</Option>
+                                            <Option value = "二居室"> 二居室</Option>
+                                            <Option value = "三居室"> 三居室</Option>
+                                            <Option value = "四居室"> 四居室</Option>
                                         </Select>
                                     )}
                                 </FormItem>
@@ -335,8 +381,8 @@ class platAdd extends Component {
                                             }]
                                         }
                                     )(
-                                        <Cascader options={options}
-                                                  onChange={() => {this.onChangeCas()}}
+                                        <Cascader options={option}
+                                                  onChange={(value)=>this.onChangeCas(value)}
                                                   placeholder="请选择" />
                                     )}
                                 </FormItem>
