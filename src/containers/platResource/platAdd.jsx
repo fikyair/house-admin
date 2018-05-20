@@ -22,6 +22,7 @@ class platAdd extends Component {
         pName:'',
         cName:'',
         sName:'',
+        userInfo:[],
     };
 
     handleSubmit() {
@@ -64,6 +65,15 @@ class platAdd extends Component {
                 addrInfo: data,
             })
         })
+
+        //查出所有用户
+        Axios.get(`/user/selectalluser/`).then((result)=>{
+            console.log("用户：",result.data);
+            const { data =[]} = result.data;
+            this.setState({
+                userInfo: data,
+            })
+        })
     }
     handleUploadChange = (e) =>{
         let { file = {}, fileList = []}  = e ;
@@ -91,6 +101,7 @@ class platAdd extends Component {
     render() {
         const {getFieldDecorator} = this.props.form;
         const addrInfo = this.state.addrInfo;
+        const userInfo = this.state.userInfo;
         const formItemLayout = {
             labelCol: {
                 xs: {span: 12},
@@ -166,6 +177,28 @@ class platAdd extends Component {
                     <div className = "ant-card-head-title">添加房源信息</div>
 
                         <Row>
+                            <Col span={8}>
+                                <FormItem
+                                    label = "用户"
+                                    {...formItemLayout}
+                                >
+                                    {getFieldDecorator( 'uId', {
+                                            initialValue: [],
+                                            rules: [{
+                                                required: true, message: '请填写房主'
+                                            }]
+                                        }
+                                    )(
+                                        <Select placeholder = "请选择" style = {{ width: 140 }}>
+                                            {
+                                                userInfo.map(item =>{
+                                                   return <Option value = {item.uId} > {item.uName}</Option>
+                                                })
+                                            }
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
                             <Col span={8}>
                                 <FormItem
                                     label = "房屋名称"
