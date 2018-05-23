@@ -3,9 +3,11 @@ import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import { FetchAPI } from '../../utils/Axios';
 import { Axios } from '../../utils/Axios';
 import ManagerBody from "../../component/public/ManagerBody";
-import { Popconfirm }  from 'antd';
+import { Popconfirm, Input}  from 'antd';
 
 const EditableCell = ({ editable, value, onChange }) => (
+
+
     <div>
         {editable
             ? <Input style={{ margin: '-5px 0' }} value={value} onChange={e => onChange(e.target.value)} />
@@ -98,9 +100,9 @@ class Main extends Component {
             let { data = [] } = reslut.data;
             const { pageNum, pageSize, total } = reslut.data.page;
             const recordsData = data.map((item) => {
-                const { rId : key , rId: uId , ...rest} = item;
+                const { rId : key , rId: rId , ...rest} = item;
                 const { fName } = item.flat;
-                return { key, uId, fName, ...rest }
+                return { key, rId, fName, ...rest }
             })
             this.setState({
                 records: recordsData,
@@ -135,6 +137,7 @@ class Main extends Component {
 
     edit(key) {
         const newData = [...this.state.records];
+        debugger
         const target = newData.filter(item => key === item.key)[0];
         if (target) {
             target.editable = true;
@@ -145,13 +148,15 @@ class Main extends Component {
         const newData = [...this.state.records];
         const target = newData.filter(item => key === item.key)[0];
         console.log("修改后的数据为：",target);
+        const { rInfo, rId } = target;
         if (target) {
             delete target.editable;
             this.setState({ records: newData });
             this.cacheData = newData.map(item => ({ ...item }));
         }
 
-        Axios.post(`/user/updateUser`,target).then((result) => {
+        const query = { rInfo, rId  }
+        Axios.post(`/remark/updateRemark`,query).then((result) => {
             console.log("成功",result);
         })
 
