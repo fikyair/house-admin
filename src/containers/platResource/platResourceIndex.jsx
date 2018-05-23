@@ -3,6 +3,9 @@ import {is, fromJS} from 'immutable';
 import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import ManagerBody from "../../component/public/ManagerBody";
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { Axios } from "../../utils/Axios";
+
 
 /* 以类的方式创建一个组件 */
 class Main extends Component {
@@ -12,68 +15,48 @@ class Main extends Component {
             pageNum: 1,
             pageSize: 10,
             total: 1,
+            flatInfo: [],
         };
     }
-    mockData = [{
-        name: '新新家园',
-        type: '一室两厅',
-        habitable: '朝南',
-        price: '1200元',
-        area: '北京市石景山区',
-        street: '实行大街',
-        age: '5年',
-        details: '家具一应俱全',
-        require: '希望你热爱干净',
-    }]
     columns = [{
         title: '房屋名称',
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'fName',
+        key: 'fName',
         width: '10%',
     }, {
         title: '房屋类型',
-        dataIndex: 'type',
-        key: 'type',
+        dataIndex: 'fType',
+        key: 'fType',
         width: '10%',
     }, {
         title: '房屋朝向',
-        dataIndex: 'habitable',
-        key: 'habitable',
+        dataIndex: 'fOrientation',
+        key: 'fOrientation',
         width: '10%',
     }, {
         title: '房屋价格',
-        dataIndex: 'price',
-        key: 'price',
+        dataIndex: 'fPrice',
+        key: 'fPrice',
         width: '10%',
     }, {
-        title: '所在地区',
-        dataIndex: 'area',
-        key: 'area',
-        width: '10%',
-    }, {
-        title: '所在街道',
-        dataIndex: 'street',
-        key: 'street',
+        title: '地址',
+        dataIndex: 'fStreet',
+        key: 'fStreet',
         width: '10%',
     }, {
         title: '房龄',
-        dataIndex: 'age',
-        key: 'age',
+        dataIndex: 'fAge',
+        key: 'fAge',
         width: '10%',
     },  {
         title: '房屋描述',
-        dataIndex: 'details',
-        key: 'details',
+        dataIndex: 'fDetails',
+        key: 'fDetails',
         width: '10%',
     },{
         title: '要求',
-        dataIndex: 'require',
-        key: 'require',
-        width: '10%',
-    },{
-        title: '房屋图片',
-        dataIndex: 'pic',
-        key: 'pic',
+        dataIndex: 'fRequire',
+        key: 'fRequire',
         width: '10%',
     },{
             title: '操作',
@@ -81,17 +64,34 @@ class Main extends Component {
             width: '10%',
             render: (text, record) => (
                 <span>
-              <a href=''>编辑</a>
+                <a href='/platResource/platDetails/:id'>详情</a>
                  <span className="ant-divider"/>
                 <a href=''>删除</a>
             </span>
             )
         }
 ];
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
+    componentWillMount(){
+        const { pageSize, pageNum } = this.state;
+        const params = { pageSize, pageNum }
+        this.searchData(params);
 
+    }
+    searchData = (params) => {
+        let { pageSize, pageNum } = params;
+        Axios.get(`/flat/queryall?pageNum=${pageNum}&pageSize=${pageSize}`).then((reslut) => {
+            console.log("Axiosreslut:",reslut.data);
+            let { data = [] } = reslut.data;
+            const { pageNum, pageSize, total } = reslut.data.page;
+            this.setState({
+                pageSize: pageSize,
+                pageNum: pageNum,
+                total: total,
+                flatInfo: data,
+            })
+        })
+
+    }
     render() {
         return (
             <div>
@@ -104,7 +104,10 @@ class Main extends Component {
                         pageSize={this.state.pageSize }
                         total={ this.state.total }
                         columns={ this.columns }
-                        dataSource={ this.mockData }
+                        dataSource={ this.state.flatInfo }
+                        changePage={(v)=>{ this.setState({pageNum: v})}}
+                        changeSize={(v)=>{ this.setState({pageSize: v})}}
+                        searchData = { this.searchData }
                     />
                 </div>
             </div>

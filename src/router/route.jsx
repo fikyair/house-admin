@@ -75,6 +75,13 @@ const platAdd = (location, cb) => {
    }, 'platAdd')
 }
 
+//房源详情页面
+const platDetails = (location, cb) => {
+	require.ensure([], require => {
+		cb(null, require('../containers/platResource/platDetails').default)
+	}, 'platDetails')
+}
+
 // 地域管理
 const region = (location, cb) => {
     require.ensure([], require => {
@@ -125,6 +132,7 @@ const RouteConfig = (
 			<Route path="/ui/twoui" getComponent={twoui} />
 			<Route path="/user/userAdd" getComponent={userAdd}/>
 			<Route path="/platResource/platAdd" getComponent={platAdd} />
+			<Route path="/platResource/platDetails/:id" getComponent={platDetails} />
 			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots
