@@ -66,11 +66,24 @@ class Main extends Component {
                 <span>
                 <a href='/platResource/platDetails/:id'>详情</a>
                  <span className="ant-divider"/>
-                <a href=''>删除</a>
+                <a  onClick={() =>{this.deleteFlat(record.fId)}}>删除</a>
             </span>
             )
         }
 ];
+    deleteFlat = (id)=> {
+
+        console.log("ssss",id)
+        const fId = id;
+        const info = {fId};
+         Axios.post(`/flat/deleteFlat`, info).then((reslut) => {
+             console.log("删除成功:",reslut.data);
+             const { pageSize, pageNum } = this.state;
+             const params = { pageSize, pageNum }
+             this.searchData(params);
+        })
+
+    }
     componentWillMount(){
         const { pageSize, pageNum } = this.state;
         const params = { pageSize, pageNum }
@@ -96,7 +109,7 @@ class Main extends Component {
         return (
             <div>
                 <div>
-                    <Bcrumb title="房源信息管理" icon="home"/>
+                    <Bcrumb title="房源信息 管理" icon="home"/>
                     <Button className="editable-add-btn" style = {{ margin: '0 24px'}} onClick={this.handleAdd}><a href = '/platResource/platAdd'>新增</a></Button>
                     <ManagerBody
                         title={ <span style={{fontSize: 13, fontWeight: 400}}> 房源信息表 </span> }
