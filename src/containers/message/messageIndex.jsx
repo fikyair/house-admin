@@ -116,6 +116,7 @@ class Main extends Component {
         })
 
     }
+    //ss
     renderColumns(text, record, column) {
         return (
             <EditableCell
