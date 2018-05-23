@@ -1,19 +1,29 @@
 import React, {Component, PropTypes} from 'react'; // 引入了React和PropTypes
-import {is, fromJS} from 'immutable';
-//import axios from 'axios';
 import {Bcrumb} from '../../component/bcrumb/bcrumb';
 import { FetchAPI } from '../../utils/Axios';
 import { Axios } from '../../utils/Axios';
 import ManagerBody from "../../component/public/ManagerBody";
+import { Popconfirm }  from 'antd';
 
-/* 以类的方式创建一个组件 */
+const EditableCell = ({ editable, value, onChange }) => (
+    <div>
+        {editable
+            ? <Input style={{ margin: '-5px 0' }} value={value} onChange={e => onChange(e.target.value)} />
+            : value
+        }
+    </div>
+);
+const records = []
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
+            remarkInfo: [],
             pageNum: 1,
             pageSize: 10,
             total: 1,
+            records,
         };
     }
 
@@ -23,36 +33,154 @@ class Main extends Component {
     }]
     columns = [{
         title: '房屋名称',
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'fName',
+        key: 'fName',
         width: '20%',
+        render: (text, record) => this.renderColumns(text, record, 'fName'),
+    }, {
+        title: '留言人',
+        dataIndex: 'rSendname',
+        key: 'rSendname',
+        width: '10%',
+        render: (text, record) => this.renderColumns(text, record, 'rSendname'),
+    }, {
+        title: '房屋所有人',
+        dataIndex: 'rBelongname',
+        key: 'rBelongname',
+        width: '10%',
+        render: (text, record) => this.renderColumns(text, record, 'rBelongname'),
     }, {
         title: '留言内容',
-        dataIndex: 'remark',
-        key: 'remark',
-        width: '60%',
+        dataIndex: 'rInfo',
+        key: 'rInfo',
+        width: '40%',
+        render: (text, record) => this.renderColumns(text, record, 'rInfo'),
     },  {
         title: '操作',
         key: 'action',
         width: '20%',
-        render: (text, record) => (
-            <span>
-              <a href=''>编辑</a>
-                 <span className="ant-divider"/>
-                <a href=''>删除</a>
-            </span>
-        )
+        render: (text, record) => {
+            const {editable} = record;
+            return (
+                <div className="editable-row-operations">
+                    {
+                        editable ?
+                            <span>
+                                    <a onClick={() => this.save(record.key)}>保存</a>
+                                        <span className="ant-divider"/>
+                                    <Popconfirm title="确定取消吗?" onConfirm={() => this.cancel(record.key)}>
+                                        <a>取消</a>
+                                    </Popconfirm>
+                                </span>
+                            :
+                            <span>
+                                    <a onClick={() => this.edit(record.key)}>编辑</a>
+                                        <span className="ant-divider"/>
+                                     <Popconfirm title="确定删除吗?" onConfirm={() => this.delete(record.key)}>
+                                        <a>删除</a>
+                                    </Popconfirm>
+                                </span>
+                    }
+                </div>
+            );
+        },
     }];
     componentWillMount (){
-      /*  const pName = '北京市'
-        Axios.get('/queryProvince/queryByPname/北京市').then(function(reslut) {
-           console.log("Axiosreslut:",reslut.data);
-       })
-*/
+        const { pageSize, pageNum } = this.state;
+        const params = { pageSize, pageNum }
+        this.searchData(params);
+
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
+    searchData = (params) => {
+        let { pageSize, pageNum } = params;
+        Axios.post(`/remark/getAllRemarkPage?pageNum=${pageNum}&pageSize=${pageSize}`).then((reslut) => {
+            console.log("留言信息查询结果:",reslut.data);
+            let { data = [] } = reslut.data;
+            const { pageNum, pageSize, total } = reslut.data.page;
+            const recordsData = data.map((item) => {
+                const { rId : key , rId: uId , ...rest} = item;
+                const { fName } = item.flat;
+                return { key, uId, fName, ...rest }
+            })
+            this.setState({
+                records: recordsData,
+                pageSize: pageSize,
+                pageNum: pageNum,
+                total: total,
+            },()=>{
+                console.log("recordsData:",records)
+            })
+            this.cacheData = recordsData.map(item => ({ ...item }));
+        })
+
     }
+    renderColumns(text, record, column) {
+        return (
+            <EditableCell
+                editable={record.editable}
+                value={text}
+                onChange={value => this.handleChange(value, record.key, column)}
+            />
+        );
+    }
+    handleChange(value, key, column) {
+        console.log("框里的值",value);
+        const newData = [...this.state.records];
+        const target = newData.filter(item => key === item.key)[0];
+        if (target) {
+            target[column] = value;
+            this.setState({ records: newData });
+        }
+    }
+
+    edit(key) {
+        const newData = [...this.state.records];
+        const target = newData.filter(item => key === item.key)[0];
+        if (target) {
+            target.editable = true;
+            this.setState({ records: newData });
+        }
+    }
+    save(key) {
+        const newData = [...this.state.records];
+        const target = newData.filter(item => key === item.key)[0];
+        console.log("修改后的数据为：",target);
+        if (target) {
+            delete target.editable;
+            this.setState({ records: newData });
+            this.cacheData = newData.map(item => ({ ...item }));
+        }
+
+        Axios.post(`/user/updateUser`,target).then((result) => {
+            console.log("成功",result);
+        })
+
+    }
+    cancel(key) {
+        const newData = [...this.state.records];
+        const target = newData.filter(item => key === item.key)[0];
+        //target 为本条数据
+        if (target) {
+            Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);//本条数据用cacheData来覆盖
+            delete target.editable;
+            this.setState({ records: newData });
+        }
+    }
+    delete(key) {
+        const newData = [...this.state.records];
+        const target = newData.filter(item => key === item.key)[0];
+
+        if (target) {
+            Axios.post(`/user/deleteUser`,target).then((result) => {
+                const { pageSize, pageNum } = this.state;
+                const params = { pageSize, pageNum }
+                this.searchData(params);
+            })
+
+        }
+
+    }
+
 
     render() {
         return (
@@ -65,7 +193,10 @@ class Main extends Component {
                         pageSize={this.state.pageSize }
                         total={ this.state.total }
                         columns={ this.columns }
-                        dataSource={ this.mockData }
+                        changePage={(v)=>{ this.setState({pageNum: v})}}
+                        changeSize={(v)=>{ this.setState({pageSize: v})}}
+                        dataSource={ this.state.records }
+                        searchData = { this.searchData }
                     />
                 </div>
             </div>
