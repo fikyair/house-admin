@@ -44,44 +44,62 @@ export class Lmenu extends Component {
 		const defaultSelectedKey = process.env.NODE_ENV !== 'production' ? [location.pathname.split('/')[location.pathname.split('/').length - 1] || 'home'] : [location.hash.split('/')[location.hash.split('/').length - 1].split('?')[0] || 'home'];
 		return (
 			<Menu openKeys={this.state.openKeys} onOpenChange={this.onOpenChange} theme="dark" mode={this.props.mode} defaultSelectedKeys={defaultSelectedKey}>
-		        <Menu.Item key="home">
+
+				<Menu.Item key="home">
 			        <Link to="/home">
 		              <Icon type="laptop" />
 		              {!this.props.collapsed && <span className="nav-text">系统信息</span>}
 		            </Link>
 	            </Menu.Item>
+
                 <Menu.Item key="user">
 			        <Link to="/user">
 		              <Icon type="user" />
 		              {!this.props.collapsed && <span className="nav-text">账号信息管理</span>}
 		            </Link>
 	            </Menu.Item>
-	            <Menu.Item key="platResource">
-	            <Link to="/platResource">
-	                 <Icon type="home" />
-	                   {!this.props.collapsed && <span className="nav-text">房源信息管理</span>}
-	                 </Link>
-	            </Menu.Item>
+
+	            <Menu.Item key="news">
+					<Link to="/news">
+						<Icon type="home" />
+                        {!this.props.collapsed && <span className="nav-text">新闻管理</span>}
+					</Link>
+				</Menu.Item>
+
+				<SubMenu
+					key="plat" title={<span><Icon type="team" /><span className="nav-text">房屋信息管理</span></span>}
+				>
+					<Menu.Item key="platResource"><Link to="/plat/platResource">房源信息</Link></Menu.Item>
+					<Menu.Item key="platIssue"><Link to="/plat/platIssue">房屋审核</Link></Menu.Item>
+				</SubMenu>
+
+				<Menu.Item key="order">
+					<Link to="/order">
+						<Icon type="message" />
+                        {!this.props.collapsed && <span className="nav-text">订单管理</span>}
+					</Link>
+				</Menu.Item>
+
+				<Menu.Item key="assumpit">
+					<Link to="/assumpit">
+						<Icon type="message" />
+                        {!this.props.collapsed && <span className="nav-text">房屋约看管理</span>}
+					</Link>
+				</Menu.Item>
+
 	            <Menu.Item key="region">
-	            <Link to="/region">
-	              <Icon type="environment-o" />
-	              {!this.props.collapsed && <span className="nav-text">地域信息管理</span>}
-	            </Link>
+	            	<Link to="/region">
+	              		<Icon type="environment-o" />
+	              		{!this.props.collapsed && <span className="nav-text">地域信息管理</span>}
+	            	</Link>
 	            </Menu.Item>
+
 				<Menu.Item key="message">
 					<Link to="/message">
 						<Icon type="message" />
                         {!this.props.collapsed && <span className="nav-text">留言信息管理</span>}
 					</Link>
 				</Menu.Item>
-	            <SubMenu
-	              key="sub1" title={<span><Icon type="team" /><span className="nav-text">新闻管理</span></span>}
-	            >
-	              <Menu.Item key="oneui"><Link to="/ui/oneui">新闻管理一</Link></Menu.Item>
-	            </SubMenu>
-	            <SubMenu key="sub2" title={<span><Icon type="setting" /><span className="nav-text">订单管理</span></span>}>
-			          <Menu.Item key="9">订单管理一</Menu.Item>
-			    </SubMenu>
 	        </Menu>
 		)
 	}

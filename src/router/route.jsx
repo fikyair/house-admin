@@ -61,11 +61,25 @@ const userAdd = (location, cb) => {
     }, 'userAdd');
 }
 
+//新闻页面
+const news = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('../containers/news/newsIndex').default)
+    }, 'news');
+}
+
 // 房源页面
 const platResource = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('../containers/platResource/platResourceIndex').default)
     }, 'platResource');
+}
+
+// 房源审核
+const platIssue = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('../containers/platResource/platIssueIndex').default)
+    }, 'platIssue');
 }
 
 // 房源增加页面
@@ -94,18 +108,20 @@ const message = (location, cb) => {
         cb(null, require('../containers/message/messageIndex').default)
     }, 'message');
 }
-// 组件一
-const oneui = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('../containers/ui/oneIndex').default)
-    }, 'oneui');
+
+//订单管理
+const order = (location, cb) => {
+    require.ensure([],require => {
+        cb(null, require('../containers/order/orderIndex').default)
+    }, 'order');
 }
 
-// 组件二
-const twoui = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('../containers/ui/twoIndex').default)
-    }, 'twoui');
+//约看管理
+
+const assumpit = (location, cb) => {
+    require.ensure([],require => {
+        cb(null, require('../containers/assumpit/assumpitIndex').default)
+    }, 'assumpit');
 }
 
 // 登录验证
@@ -125,14 +141,16 @@ const RouteConfig = (
 			<IndexRoute getComponent={home} /> // 默认加载的组件，比如访问www.test.com,会自动跳转到www.test.com/home
 			<Route path="/home" getComponent={home}  />
             <Route path="/user" getComponent={user}/>
-			<Route path="/platResource" getComponent={platResource} />
+			<Route path="/news" getComponent={news} />
 			<Route path="/region" getComponent={region} />
 			<Route path="/message" getComponent={message}  />
-			<Route path="/ui/oneui" getComponent={oneui}/>
-			<Route path="/ui/twoui" getComponent={twoui} />
+			<Route path="/plat/platResource" getComponent={platResource}/>
+			<Route path="/plat/platIssue" getComponent={platIssue} />
 			<Route path="/user/userAdd" getComponent={userAdd}/>
 			<Route path="/platResource/platAdd" getComponent={platAdd} />
 			<Route path="/platResource/platDetails/:id" getComponent={platDetails} />
+			<Route path="/order" getComponent={order} />
+			<Route path="/assumpit" getComponent={assumpit} />
 			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots
