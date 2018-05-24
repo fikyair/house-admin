@@ -69,17 +69,35 @@ class Main extends Component {
         width: '20%',
         render: (text, record) => (
             <span>
-                <a href='/platResource/platDetails/:id'>通过</a>
+                <a onClick={() => { this.pass(record.fId)} }>通过</a>
                  <span className="ant-divider"/>
-                <a  onClick={() =>{this.pass()}}>不通过</a>
+                <a onClick={()=> { this.noPass(record.fId)} }>不通过</a>
             </span>
         )
     }];
 
-    pass() {
-
+    pass =(fId)=> {
+        const passFlag = 1;
+        const queryInfo = { fId, passFlag };
+        const { pageSize, pageNum } = this.state;
+        const params = { pageSize, pageNum }
+        //console.log("pass",queryInfo);
+        Axios.post(`/verify/verifyFlatInfo/`,queryInfo).then((result)=>{
+            console.log("审核反馈：",result.data);
+            this.searchData(params);
+        })
     }
-
+    noPass =(fId)=> {
+        const passFlag = 0;
+        const queryInfo = { fId, passFlag };
+        //console.log("noPass",queryInfo);
+        const { pageSize, pageNum } = this.state;
+        const params = { pageSize, pageNum }
+        Axios.post(`/verify/verifyFlatInfo/`,queryInfo).then((result)=>{
+            console.log("审核反馈：",result.data);
+            this.searchData(params);
+        })
+    }
     componentWillMount (){
         const { pageSize, pageNum } = this.state;
         const params = { pageSize, pageNum }
@@ -96,8 +114,10 @@ class Main extends Component {
             const recordsData = data.map((item) => {
                 if(item.fStatus == 0){
                     item.fStatus = '未通过';
-                }else {
+                }else if (item.fStatus == 1) {
                     item.fStatus = '审核通过'
+                }else {
+                    item.fStatus = '审核中'
                 }
                 const { fId : key , fId: fId , fName, fStatus, ...rest} = item;
                 return { key, fId, fName, fStatus, ...rest }
