@@ -117,11 +117,10 @@ const order = (location, cb) => {
 }
 
 //约看管理
-
-const assumpit = (location, cb) => {
-    require.ensure([],require => {
-        cb(null, require('../containers/assumpit/assumpitIndex').default)
-    }, 'assumpit');
+const assumpsit = (location, cb) => {
+	require.ensure([], require => {
+		cb(null, require('../containers/assumpit/assumpitIndex').default)
+	}, 'assumpsit')
 }
 
 // 登录验证
@@ -150,7 +149,7 @@ const RouteConfig = (
 			<Route path="/platResource/platAdd" getComponent={platAdd} />
 			<Route path="/platResource/platDetails/:id" getComponent={platDetails} />
 			<Route path="/order" getComponent={order} />
-			<Route path="/assumpit" getComponent={assumpit} />
+			<Route path="/assumpsit" getComponent={assumpsit} />
 			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots

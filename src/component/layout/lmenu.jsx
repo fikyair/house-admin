@@ -80,8 +80,8 @@ export class Lmenu extends Component {
 					</Link>
 				</Menu.Item>
 
-				<Menu.Item key="assumpit">
-					<Link to="/assumpit">
+				<Menu.Item key="assumpsit">
+					<Link to="/assumpsit">
 						<Icon type="message" />
                         {!this.props.collapsed && <span className="nav-text">房屋约看管理</span>}
 					</Link>
