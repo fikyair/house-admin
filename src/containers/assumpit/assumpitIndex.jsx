@@ -27,53 +27,112 @@ class Main extends Component {
     }
 
     columns = [{
-        title: '房屋编号',
-        dataIndex: 'fId',
-        key: 'fId',
-        width: '30%',
-        render: (text, record) => this.renderColumns(text, record, 'fId'),
+        title: '房屋地址',
+        dataIndex: 'fStreet',
+        key: 'fStreet',
+        width: '20%',
     }, {
         title: '约看人',
-        dataIndex: 'uName',
-        key: 'uName',
-        width: '30%',
-        render: (text, record) => this.renderColumns(text, record, 'uName'),
+        dataIndex: 'userName',
+        key: 'userName',
+        width: '20%',
     }, {
         title: '约看时间',
-        dataIndex: 'oTime',
-        key: 'oTime',
-        width: '30%',
-        render: (text, record) => this.renderColumns(text, record, 'oTime'),
+        dataIndex: 'assTime',
+        key: 'assTime',
+        width: '20%',
+    },{
+        title: '约看状态',
+        dataIndex: 'assStatus',
+        key: 'assStatus',
+        width: '20%',
     },  {
         title: '操作',
         key: 'action',
-        width: '40%',
-        render: (text, record) => {
-            const {editable} = record;
-            return (
-                <div className="editable-row-operations">
-                    {
-                        editable ?
-                            <span>
-                                    <a onClick={() => this.save(record.key)}>保存</a>
-                                        <span className="ant-divider"/>
-                                    <Popconfirm title="确定取消吗?" onConfirm={() => this.cancel(record.key)}>
-                                        <a>取消</a>
-                                    </Popconfirm>
-                            </span>
-                            :
-                            <span>
-                                    <a onClick={() => this.edit(record.key)}>编辑</a>
-                                        <span className="ant-divider"/>
-                                     <Popconfirm title="确定删除吗?" onConfirm={() => this.delete(record.key)}>
-                                        <a>删除</a>
-                                    </Popconfirm>
-                            </span>
-                    }
-                </div>
-            );
-        },
+        width: '20%',
+        render: (text, record) => (
+            <span>
+                <a onClick={() => { this.pass(record.fId)} }>设为已约看</a>
+                 <span className="ant-divider"/>
+                <a onClick={()=> { this.delete(record.fId)} }>删除</a>
+            </span>
+        ),
     }];
+
+    pass =()=> {
+
+    }
+
+    delete =()=> {
+
+    }
+
+    componentWillMount (){
+        const { pageSize, pageNum } = this.state;
+        const params = { pageSize, pageNum }
+        this.searchData(params);
+
+    }
+//ss
+    searchData = (params) => {
+        let { pageSize, pageNum } = params;
+        Axios.post(`/assumpsit/getAssPage?pageNum=${pageNum}&pageSize=${pageSize}`).then((reslut) => {
+            console.log("房屋审核结果:",reslut.data);
+            let { data = [] } = reslut.data;
+            const { pageNum, pageSize, total } = reslut.data.page;
+            const recordsData = data.map((item) => {
+                if(item.assStatus == 0){
+                    item.assStatus = '未约看';
+                }else {
+                    item.assStatus = '已约看'
+                }
+
+                const time = item.assStarttime.split("T");
+                let timeTemp = '';
+                let ky = '';
+                ky = time[1];
+                switch (ky) {
+                    case '0': timeTemp ='00:00-02:00'
+                        break;
+                    case '1': timeTemp ='02:00-04:00'
+                        break;
+                    case '2': timeTemp ='04:00-06:00'
+                        break;
+                    case '3': timeTemp ='06:00-08:00'
+                        break;
+                    case '4': timeTemp ='08:00-10:00'
+                        break;
+                    case '5': timeTemp ='10:00-12:00'
+                        break;
+                    case '6': timeTemp ='12:00-14:00'
+                        break;
+                    case '7': timeTemp ='14:00-16:00'
+                        break;
+                    case '8': timeTemp ='16:00-18:00'
+                        break;
+                    case '9': timeTemp ='18:00-20:00'
+                        break;
+                    case '10': timeTemp ='20:00-22-00'
+                        break;
+                    case '11': timeTemp ='22:00-24:00'
+                        break;
+                }
+                const fStreet = item.flat.fStreet;
+                const assTime = time[0] + " "+ timeTemp;
+                const { assId : key , assId: assId , assStatus, userName,  ...rest} = item;
+                return { key, assId, assStatus, fStreet, userName, assTime, ...rest }
+            })//aassdd
+            this.setState({
+                records: recordsData,
+                pageSize: pageSize,
+                pageNum: pageNum,
+                total: total,
+            },()=>{
+                console.log("recordsData:",records)
+            })
+        })
+
+    }
 
     render() {
         return (
