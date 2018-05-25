@@ -71,7 +71,9 @@ class Main extends Component {
             <span>
                 <a onClick={() => { this.pass(record.fId)} }>通过</a>
                  <span className="ant-divider"/>
-                <a onClick={()=> { this.noPass(record.fId)} }>不通过</a>
+                 <Popconfirm title="确认?" onConfirm={()=> { this.noPass(record.fId)} }>
+                    <a>不通过</a>
+                </Popconfirm>
             </span>
         )
     }];

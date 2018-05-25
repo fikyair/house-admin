@@ -52,19 +52,33 @@ class Main extends Component {
         width: '20%',
         render: (text, record) => (
             <span>
-                <a onClick={() => { this.pass(record.fId)} }>设为已约看</a>
+                <a onClick={() => { this.pass(record.assId)} }>设为已约看</a>
                  <span className="ant-divider"/>
-                <a onClick={()=> { this.delete(record.fId)} }>删除</a>
+                <Popconfirm title="确定删除吗?" onConfirm={()=> { this.delete(record.assId)}}>
+                    <a>删除</a>
+                </Popconfirm>
             </span>
         ),
     }];
 
-    pass =()=> {
+    pass =(assId)=> {
 
+       const query = { assId };
+       const { pageSize, pageNum } = this.state;
+       const params = { pageSize, pageNum }
+       Axios.post(`/assumpsit/assPass`, query).then((result)=>{
+           console.log("你看你看", result.data );
+           this.searchData(params);
+       })
     }
 
-    delete =()=> {
-
+    delete =(assId)=> {
+        const { pageSize, pageNum } = this.state;
+        const params = { pageSize, pageNum }
+        Axios.get(`/assumpsit/assdelete/${assId}`).then((result)=>{
+            console.log("你看你看", result );
+            this.searchData(params);
+        })
     }
 
     componentWillMount (){
