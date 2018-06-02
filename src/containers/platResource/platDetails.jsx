@@ -24,12 +24,18 @@ class platDetails extends Component {
         userInfo:[],
         flatInfo:[],
     };
-
+//ssss
     handleSubmit() {
+        const { id } = this.props.params;
+        const fId = id;
         this.props.form.validateFields((err, values) => {
             if(!err) {
-                const formData = this.props.form.getFieldsValue();
-
+                const formData = {...values, fId };
+                console.log("表单详情：", formData );
+                Axios.post(`/flat/updateFlat`,formData).then((result) =>{
+                    console.log('result===>',result.data);
+                    window.location.href = '/plat/platResource';
+                })
             }
         })
     }
@@ -56,12 +62,6 @@ class platDetails extends Component {
     render() {
         const {getFieldDecorator} = this.props.form;
         const flatInfo = this.state.flatInfo;
-        console.log("flatInfo", flatInfo);
-        if( flatInfo.length !=0 ){
-            const { fName='', } = flatInfo[0] ;
-        }
-        //console.log("fPrice", fPrice);ppddddss
-       const fPrice='', fAge='', fFloor='', fArea='', fOrientation='', fType='', fHabitable='', fToilet='', fShower='', fHeating='', fStreet='',fDetails='',fRequire='';
         const formItemLayout = {
             labelCol: {
                 xs: {span: 12},
@@ -84,7 +84,7 @@ class platDetails extends Component {
                                 label = "用户"
                                 {...formItemLayout}
                             >
-                                {getFieldDecorator( 'uId', {
+                                {getFieldDecorator( 'userName', {
                                         initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].userName,
                                         rules: [{
                                             required: true, message: '请填写房主'
@@ -343,11 +343,11 @@ class platDetails extends Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={8}>
-                            房屋图片：
-                            <img width={140}
-                                 src="http://aijia-flat-sh-1253646934.picsh.myqcloud.com/v800x600_ChAFD1p-3POAAMtZABlMRCgvGoo134.JPG" />
-                        </Col>
+                        {/*<Col span={8}>*/}
+                            {/*房屋图片：*/}
+                            {/*<img width={140}*/}
+                                 {/*src="http://aijia-flat-sh-1253646934.picsh.myqcloud.com/v800x600_ChAFD1p-3POAAMtZABlMRCgvGoo134.JPG" />*/}
+                        {/*</Col>*/}
                     </Row>
                 </Form>
                 <Button type="primary" htmlType="submit" style={{marginLeft: '69%', marginTop: 20}}
