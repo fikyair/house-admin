@@ -62,13 +62,18 @@ class Main extends Component {
             title: '操作',
             key: 'action',
             width: '10%',
-            render: (text, record) => (
-                <span>
-                <a href='/platResource/platDetails/:id'>详情</a>
-                 <span className="ant-divider"/>
-                <a  onClick={() =>{this.deleteFlat(record.fId)}}>删除</a>
-            </span>
-            )
+            render: (text, record) => {
+                return (
+                    <span>
+
+                            <a href={ `/platResource/platDetails/${record.fId}`}>详情</a>
+                        <span className="ant-divider"/>
+                            <a  onClick={() =>{this.deleteFlat(record.fId)}}>删除</a>
+                    </span>
+                    )
+
+            }
+
         }
 ];
     deleteFlat = (id)=> {

@@ -22,6 +22,7 @@ class platDetails extends Component {
         cName:'',
         sName:'',
         userInfo:[],
+        flatInfo:[],
     };
 
     handleSubmit() {
@@ -37,14 +38,30 @@ class platDetails extends Component {
     componentDidMount =()=> {
         const { id } = this.props.params;
         console.log("id..", id)
+        Axios.get(`/flat/flatbyid/${id}`).then((result) => {
+            const { data = []} =result.data;
+            console.log('result==>',result.data);
+            this.setState({
+                flatInfo: data,
+            },() =>{
+                console.log("flatInfo==>>", this.state.flatInfo )
+            });
+        })
     }
     //dd
     handleUploadChange = (e) =>{
-
+//ddgdddddd
     }
 
     render() {
         const {getFieldDecorator} = this.props.form;
+        const flatInfo = this.state.flatInfo;
+        console.log("flatInfo", flatInfo);
+        if( flatInfo.length !=0 ){
+            const { fName='', } = flatInfo[0] ;
+        }
+        //console.log("fPrice", fPrice);ppddddss
+       const fPrice='', fAge='', fFloor='', fArea='', fOrientation='', fType='', fHabitable='', fToilet='', fShower='', fHeating='', fStreet='',fDetails='',fRequire='';
         const formItemLayout = {
             labelCol: {
                 xs: {span: 12},
@@ -68,7 +85,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'uId', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].userName,
                                         rules: [{
                                             required: true, message: '请填写房主'
                                         }]
@@ -84,7 +101,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fName', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fName,
                                         rules: [{
                                             required: true, message: '请填写房屋名称'
                                         }]
@@ -101,7 +118,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fPrice', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fPrice,
                                         rules: [{
                                             required: true, message: '请填写价格'
                                         }]
@@ -117,7 +134,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fAge', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fAge,
                                         rules: [{
                                             required: true, message: '请填写房龄'
                                         }]
@@ -133,7 +150,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fFloor', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fFloor,
                                         rules: [{
                                             required: true, message: '请填写所在楼层'
                                         }]
@@ -149,7 +166,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fArea', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fArea,
                                         rules: [{
                                             required: true, message: '请填写房屋面积'
                                         }]
@@ -165,7 +182,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fOrientation', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fOrientation,
                                         rules: [{
                                             required: true, message: '请填写房屋朝向'
                                         }]
@@ -182,7 +199,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fType', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fType,
                                         rules: [{
                                             required: true, message: '请填写房屋类型'
                                         }]
@@ -204,7 +221,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fHabitable', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fHabitable,
                                         rules: [{
                                             required: true, message: '请填写居室'
                                         }]
@@ -226,7 +243,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fToilet', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fToilet,
                                         rules: [{
                                             required: true, message: '请填写是否有独立卫生间'
                                         }]
@@ -245,7 +262,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fShower', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fShower==1?'是':'否',
                                         rules: [{
                                             required: true, message: '请填写是否有独立淋浴'
                                         }]
@@ -264,7 +281,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fHeating', {
-                                        initialValue: [],
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fHeating,
                                         rules: [{
                                             required: true, message: '请填写是否有集中供暖'
                                         }]
@@ -283,7 +300,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fStreet', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fStreet,
                                         rules: [{
                                             required: true, message: '请填写地址'
                                         }]
@@ -300,7 +317,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fDetails', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fDetails,
                                         rules: [{
                                             required: true, message: '请填写房屋描述信息'
                                         }]
@@ -316,7 +333,7 @@ class platDetails extends Component {
                                 {...formItemLayout}
                             >
                                 {getFieldDecorator( 'fRequire', {
-                                        initialValue: '',
+                                        initialValue: this.state.flatInfo.length==0?'':this.state.flatInfo[0].fRequire,
                                         rules: [{
                                             required: true, message: '请填写对住户的要求'
                                         }]
