@@ -134,11 +134,11 @@ const requireAuth = (nextState, replace) => {
 	}
 }
 // 登录
-const login = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('../containers/login/login').default)
-    }, 'login')
-}
+// const login = (location, cb) => {
+//     require.ensure([], require => {
+//         cb(null, require('../containers/login/login').default)
+//     }, 'login')
+// }ssd
 
 const RouteConfig = (
 	<Router history={browserHistory}>
@@ -156,7 +156,7 @@ const RouteConfig = (
 			<Route path="/platResource/platDetails/:id" getComponent={platDetails} />
 			<Route path="/order" getComponent={order} />
 			<Route path="/assumpsit" getComponent={assumpsit} />
-			{/*<Route path="/ui/twoui" getComponent={twoui} onEnter={requireAuth} />*/}
+			<Route path="/uis" getComponent={order} onEnter={requireAuth} />
 		</Route>
 		<Route path="/login" component={Roots}> // 所有的访问，都跳转到Roots
 			<IndexRoute component={login} /> // 默认加载的组件，比如访问www.test.com,会自动跳转到www.test.com/home
