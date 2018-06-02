@@ -133,12 +133,18 @@ const requireAuth = (nextState, replace) => {
 		});
 	}
 }
+// 登录
+const login = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('../containers/login/login').default)
+    }, 'login')
+}
 
 const RouteConfig = (
 	<Router history={browserHistory}>
 		<Route path="/home" component={layout} >
 			<IndexRoute getComponent={home} /> // 默认加载的组件，比如访问www.test.com,会自动跳转到www.test.com/home
-			<Route path="/home" getComponent={home}  />
+			<Route path="/home" getComponent={home} />
             <Route path="/user" getComponent={user}/>
 			<Route path="/news" getComponent={news} />
 			<Route path="/region" getComponent={region} />
