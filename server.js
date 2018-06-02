@@ -28,7 +28,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // 代理服务器
 app.use('/common', proxyMiddleware({
-    target: 'http://localhost:8081',
+    target: 'http://localhost:8085',
     changeOrigin: true
 }));
 

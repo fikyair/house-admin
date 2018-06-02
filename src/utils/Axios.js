@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 export const Axios = axios.create({
-    baseURL: "http://localhost:8081/", // 因为我本地做了反向代理 需要设置为 / 根目录才能实现
+    baseURL: "http://localhost:8085/", // 因为我本地做了反向代理 需要设置为 / 根目录才能实现
     timeout: 10000,
     responseType: "json",
     withCredentials: true, // 是否允许带cookie这些
