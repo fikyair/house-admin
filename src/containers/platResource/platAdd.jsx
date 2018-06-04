@@ -42,6 +42,7 @@ class platAdd extends Component {
 
                 Axios.post(`flat/addFlat`,formDataWithImg).then((result) =>{
                     console.log("添加房屋返回信息：",result);
+                    window.location.href = '/plat/platResource';
                 })
             }
         })
@@ -115,7 +116,7 @@ class platAdd extends Component {
 
         const args = {
             name: 'file',
-            action: 'http://localhost:8081/flat/imgUpload',
+            action: 'http://localhost:8085/flat/imgUpload',
             listType: 'picture',
             fileList: this.state.fileList,
             className: 'upload-list-inline',
