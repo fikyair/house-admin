@@ -177,7 +177,7 @@ class Main extends Component {
                 <div>
                     <Bcrumb title="新闻公告管理" icon="message"/>
                     <ManagerBody
-                        title={ <span style={{fontSize: 13, fontWeight: 400}}> 留言信息表 </span> }
+                        title={ <span style={{fontSize: 13, fontWeight: 400}}>新闻公告信息表 </span> }
                         pageNum={ this.state.pageNum }
                         pageSize={this.state.pageSize }
                         total={ this.state.total }
