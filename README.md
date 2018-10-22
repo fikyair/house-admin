@@ -31,8 +31,6 @@
 
 <img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
 
-<img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E7%BA%A6%E7%9C%8B%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png
-"/>
 
 ### 下载
 
