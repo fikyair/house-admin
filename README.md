@@ -20,16 +20,16 @@
 ### 效果图
 
 
-<img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E5%9C%B0%E5%9F%9F%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
+<img width="800" height="373" src="http://qiniu.xueshiming.cn/%E5%9C%B0%E5%9F%9F%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
 
 
-<img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E6%88%BF%E6%BA%90%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
+<img width="800" height="373" src="http://qiniu.xueshiming.cn/%E6%88%BF%E6%BA%90%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
 
-<img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E6%96%B0%E9%97%BB%E5%85%AC%E5%91%8A%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
+<img width="800" height="373" src="http://qiniu.xueshiming.cn/%E6%96%B0%E9%97%BB%E5%85%AC%E5%91%8A%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
 
-<img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E7%95%99%E8%A8%80%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
+<img width="800" height="373" src="http://qiniu.xueshiming.cn/%E7%95%99%E8%A8%80%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
 
-<img width="800" height="373" src="http://oziqlv1ur.bkt.clouddn.com/%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
+<img width="800" height="373" src="http://qiniu.xueshiming.cn/%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png"/>
 
 
 ### 下载
