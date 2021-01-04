@@ -30,7 +30,7 @@
   "private": true,
   "dependencies": {
     "antd": "^2.13.9",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-runtime": "^6.23.0",
     "cos-js-sdk-v5": "^0.4.3",
     "echarts": "^3.6.2",
